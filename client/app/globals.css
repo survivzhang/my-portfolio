@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  :root {
+    --background: #fdf5e6; /* 奶油白 */
+    --foreground: #8b5a2b; /* 焦糖棕 */
+    --primary: #b22222; /* 酒红 */
+    --secondary: #556b2f; /* 橄榄绿 */
+  }
 }
 
 @media (prefers-color-scheme: dark) {

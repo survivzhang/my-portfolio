@@ -11,6 +11,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "var(--primary)", // 添加酒红色变量
+        secondary: "var(--secondary)", // 添加橄榄绿变量
       },
     },
   },
