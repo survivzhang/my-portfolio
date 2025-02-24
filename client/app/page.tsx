@@ -7,12 +7,18 @@ export default function Home() {
       {/* 导航栏 */}
       <nav className="bg-secondary p-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-foreground font-serif text-2xl">Your Name</h1>
+          <h1 className="text-white font-serif text-2xl">Zichen</h1>
           <div className="space-x-6">
-            <Link href="/projects" className="text-foreground ">
+            <Link
+              href="/projects"
+              className="text-white hover:text-background transition"
+            >
               Projects
             </Link>
-            <Link href="/about" className="text-foreground ">
+            <Link
+              href="/about"
+              className="text-white hover:text-background transition"
+            >
               About
             </Link>
           </div>
@@ -32,13 +38,13 @@ export default function Home() {
         <div className="mt-6 flex gap-4">
           <Link
             href="/projects"
-            className="bg-secondary text-black px-6 py-2 rounded-lg hover:opacity-80 transition"
+            className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
           >
             View Projects
           </Link>
           <Link
             href="/about"
-            className="border border-secondary text-secondary px-6 py-2 rounded-lg hover:bg-secondary hover:text-white transition"
+            className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
           >
             About Me
           </Link>
@@ -48,7 +54,9 @@ export default function Home() {
       {/* 页脚 */}
       <footer className="bg-secondary text-white p-4">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="font-serif">© 2024 Your Name. All rights reserved.</p>
+          <p className="font-serif">
+            © 2024 Zichen Zhang. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>
