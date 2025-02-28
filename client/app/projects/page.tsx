@@ -168,7 +168,9 @@ export default function Projects() {
           return (
             <div
               key={project.id}
-              ref={(el) => (projectRefs.current[actuaIndex] = el)}
+              ref={(el) => {
+                projectRefs.current[actuaIndex] = el;
+              }}
               className="min-h-screen flex items-center justify-center"
             >
               <div className="max-w-7xl w-full">
