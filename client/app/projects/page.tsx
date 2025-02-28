@@ -147,6 +147,79 @@ export default function Projects() {
           </div>
         </div>
       </div>
+      <div className="fixed right-8 top-1/2 transform -tanslate-y-1/2 flex flex-col space-y-4 z-50">
+        {projects.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollToProject(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              activeProject === index
+                ? "bg-primary w-4 h-4"
+                : "bg-secondary/40 hover:bg-secondary/70"
+            }`}
+            aria-label={`Go to project ${index + 1}`}
+          />
+        ))}
+      </div>
+      <div className="py-16 space-y-[100vh] px-6">
+        {projects.slice(1).map((project, index) => {
+          const actuaIndex = index + 1;
+
+          return (
+            <div
+              key={project.id}
+              ref={(el) => (projectRefs.current[actuaIndex] = el)}
+              className="min-h-screen flex items-center justify-center"
+            >
+              <div className="max-w-7xl w-full">
+                <div className="flex flex-col md:flex-row gap-8 bg-white rounded-lg shadow-xl overflow-hidden">
+                  <div className="md:w-1/2 relative h-64 md:h-[500px]">
+                    <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+                      <div className="text-gray-400">{project.title}.Image</div>
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="md-w-1/2 p-8 flex flex-col">
+                    <div>
+                      <h2 className="text-3xl font-serif font-bold text-primary mb-4">
+                        {project.title}
+                      </h2>
+                      <p className="text-foreground mb-6 text-lg">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-8">
+                        {project.tags.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="mt-auto flex justify-between items-center">
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-secondary text-white px-6 py-3 rounded-md hover:bg-primary transition duration-300"
+                      >
+                        View Project
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
