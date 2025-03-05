@@ -1,6 +1,6 @@
-"use client";
+"use strict";
+import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 //projects data
@@ -31,9 +31,12 @@ const projects = [
     link: "https://zichen-zhang.vercel.app/",
   },
 ];
+
 export default function Projects() {
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeProject, setActiveProject] = useState(0);
+  const [previousProject, setPreviousProject] = useState(0);
+  const [isChanging, setIsChanging] = useState(false);
 
   useEffect(() => {
     projectRefs.current = projectRefs.current.slice(0, projects.length);
@@ -45,8 +48,18 @@ export default function Projects() {
             const index = projectRefs.current.findIndex(
               (ref) => ref === entry.target
             );
-            if (index !== -1) {
+            if (index !== -1 && index !== activeProject) {
+              // Track previous project for animation direction
+              setPreviousProject(activeProject);
+              setIsChanging(true);
+
+              // Set new active project
               setActiveProject(index);
+
+              // Reset changing state after animation completes
+              setTimeout(() => {
+                setIsChanging(false);
+              }, 600);
             }
           }
         });
@@ -67,13 +80,30 @@ export default function Projects() {
         if (ref) observer.unobserve(ref);
       });
     };
-  }, [projects]);
+  }, [activeProject]);
 
   const scrollToProject = (index: number) => {
     projectRefs.current[index]?.scrollIntoView({
       behavior: "smooth",
       block: "center",
     });
+  };
+
+  // Determine animation direction based on project index change
+  const getAnimationDirection = (isImage = false) => {
+    if (!isChanging) return "opacity-100 transform-none";
+
+    const isMovingUp = previousProject > activeProject;
+
+    if (isImage) {
+      return isMovingUp
+        ? "opacity-0 translate-y-full"
+        : "opacity-0 -translate-y-full";
+    } else {
+      return isMovingUp
+        ? "opacity-0 translate-x-full"
+        : "opacity-0 -translate-x-full";
+    }
   };
 
   return (
@@ -84,9 +114,12 @@ export default function Projects() {
             My Projects
           </h1>
           <div className="relative w-full h-[70vh] overflow-hidden rounded-lg shadow-xl bg-white flex flex-col md:flex-row">
-            <div className="md:w-1/2 relative h-64 md:h-auto">
-              <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                <div className="text-gray-400">{projects[0].title}.Image</div>
+            <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+              <div
+                className={`absolute inset-0 bg-gray-200 transition-all duration-500 ease-in-out ${getAnimationDirection(
+                  true
+                )}`}
+              >
                 <Image
                   src={projects[0].image}
                   alt={projects[0].title}
@@ -96,7 +129,9 @@ export default function Projects() {
               </div>
             </div>
             <div className="md:w-1/2 p-8 flex flex-col">
-              <div>
+              <div
+                className={`transition-all duration-500 ease-in-out ${getAnimationDirection()}`}
+              >
                 <h2 className="text-3xl font-serif font-bold text-primary mb-4">
                   {projects[0].title}
                 </h2>
@@ -107,7 +142,7 @@ export default function Projects() {
                   {projects[0].tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-3 py-1 bg-secondary/10  text-secondary text-sm rounded-full"
+                      className="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full"
                     >
                       {tag}
                     </span>
@@ -119,7 +154,7 @@ export default function Projects() {
                   href={projects[0].link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block bg-secondary text-white px-6 py-3 rounded=md hover:bg-promary transition duration-300"
+                  className="inline-block bg-secondary text-white px-6 py-3 rounded-md hover:bg-primary transition duration-300"
                 >
                   View Project
                 </a>
@@ -129,7 +164,7 @@ export default function Projects() {
                 >
                   <span className="mb-2">See more projects</span>
                   <svg
-                    className="w-6 h-6 animate-bounce group-hover::text-primary"
+                    className="w-6 h-6 animate-bounce group-hover:text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -147,7 +182,7 @@ export default function Projects() {
           </div>
         </div>
       </div>
-      <div className="fixed right-8 top-1/2 transform -tanslate-y-1/2 flex flex-col space-y-4 z-50">
+      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 flex flex-col space-y-4 z-50">
         {projects.map((_, index) => (
           <button
             key={index}
@@ -163,21 +198,30 @@ export default function Projects() {
       </div>
       <div className="py-16 space-y-[100vh] px-6">
         {projects.slice(1).map((project, index) => {
-          const actuaIndex = index + 1;
+          const actualIndex = index + 1;
+          const isActive = activeProject === actualIndex;
+          const wasActive = previousProject === actualIndex;
 
           return (
             <div
               key={project.id}
               ref={(el) => {
-                projectRefs.current[actuaIndex] = el;
+                projectRefs.current[actualIndex] = el;
               }}
               className="min-h-screen flex items-center justify-center"
             >
               <div className="max-w-7xl w-full">
                 <div className="flex flex-col md:flex-row gap-8 bg-white rounded-lg shadow-xl overflow-hidden">
-                  <div className="md:w-1/2 relative h-64 md:h-[500px]">
-                    <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                      <div className="text-gray-400">{project.title}.Image</div>
+                  <div className="md:w-1/2 relative h-64 md:h-[500px] overflow-hidden">
+                    <div
+                      className={`absolute inset-0 bg-gray-200 transition-all duration-500 ease-in-out ${
+                        isActive
+                          ? "opacity-100 transform-none"
+                          : wasActive && isChanging
+                          ? getAnimationDirection(true)
+                          : "opacity-0"
+                      }`}
+                    >
                       <Image
                         src={project.image}
                         alt={project.title}
@@ -186,8 +230,16 @@ export default function Projects() {
                       />
                     </div>
                   </div>
-                  <div className="md-w-1/2 p-8 flex flex-col">
-                    <div>
+                  <div className="md:w-1/2 p-8 flex flex-col">
+                    <div
+                      className={`transition-all duration-500 ease-in-out ${
+                        isActive
+                          ? "opacity-100 transform-none"
+                          : wasActive && isChanging
+                          ? getAnimationDirection()
+                          : "opacity-0"
+                      }`}
+                    >
                       <h2 className="text-3xl font-serif font-bold text-primary mb-4">
                         {project.title}
                       </h2>
@@ -195,9 +247,9 @@ export default function Projects() {
                         {project.description}
                       </p>
                       <div className="flex flex-wrap gap-2 mb-8">
-                        {project.tags.map((tag, index) => (
+                        {project.tags.map((tag, tagIndex) => (
                           <span
-                            key={index}
+                            key={tagIndex}
                             className="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full"
                           >
                             {tag}
@@ -205,7 +257,7 @@ export default function Projects() {
                         ))}
                       </div>
                     </div>
-                    <div className="mt-auto flex justify-between items-center">
+                    <div className="mt-auto">
                       <a
                         href={project.link}
                         target="_blank"

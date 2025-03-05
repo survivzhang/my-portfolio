@@ -1,7 +1,8 @@
-"use client";
+"use strict";
+import React from "react";
 
+import CollapsibleSidebar from "@/components/CollapsibleSidebar";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 // Project data
@@ -170,7 +171,9 @@ export default function Home() {
   }, [activeProject]);
 
   // Scroll to section function
-  const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
+  const scrollToSection = (
+    sectionRef: React.RefObject<HTMLDivElement | null>
+  ) => {
     sectionRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -196,93 +199,7 @@ export default function Home() {
   return (
     <div className="bg-background min-h-screen">
       {/* Side Contact Panel */}
-      <div
-        className={`fixed right-0 top-0 bottom-0 z-50 w-16 md:w-20 flex flex-col items-center justify-center transition-all duration-500 ${
-          activeSection === "home"
-            ? "opacity-100 translate-x-0"
-            : "opacity-0 translate-x-16 hover:opacity-100 hover:translate-x-0"
-        }`}
-      >
-        <div className="bg-secondary/90 backdrop-blur-sm h-auto py-8 px-3 rounded-l-lg shadow-xl flex flex-col items-center gap-6">
-          {/* Social Media Icons */}
-          <a
-            href="https://github.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-primary transition-colors duration-300"
-            aria-label="GitHub"
-          >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://linkedin.com/in/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-primary transition-colors duration-300"
-            aria-label="LinkedIn"
-          >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
-          </a>
-
-          <a
-            href="mailto:your.email@example.com"
-            className="text-white hover:text-primary transition-colors duration-300"
-            aria-label="Email"
-          >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-            </svg>
-          </a>
-
-          <a
-            href="https://twitter.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-primary transition-colors duration-300"
-            aria-label="Twitter"
-          >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.029 10.029 0 01-3.127 1.195c-.89-1.068-2.166-1.817-3.593-1.817-2.726 0-4.934 2.207-4.934 4.933 0 .39.044.765.126 1.124A13.98 13.98 0 011.64 3.16a4.923 4.923 0 001.523 6.57 4.854 4.854 0 01-2.23-.616v.06c0 2.39 1.7 4.38 3.954 4.83-.413.114-.85.174-1.3.174-.314 0-.62-.03-.918-.086a4.935 4.935 0 004.604 3.418 9.868 9.868 0 01-6.115 2.107c-.398 0-.79-.023-1.175-.068a13.995 13.995 0 007.548 2.212c9.057 0 14.01-7.502 14.01-14.01 0-.213-.005-.426-.015-.637a10.048 10.048 0 002.457-2.55" />
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      {/* Navigation Indicators */}
-      <div className="fixed left-8 top-1/2 transform -translate-y-1/2 flex flex-col space-y-6 z-40">
-        <button
-          onClick={() => scrollToSection(homeRef)}
-          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-            activeSection === "home"
-              ? "bg-primary w-4 h-4"
-              : "bg-secondary/40 hover:bg-secondary/70"
-          }`}
-          aria-label="Go to home"
-        />
-        <button
-          onClick={() => scrollToSection(aboutRef)}
-          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-            activeSection === "about"
-              ? "bg-primary w-4 h-4"
-              : "bg-secondary/40 hover:bg-secondary/70"
-          }`}
-          aria-label="Go to about"
-        />
-        <button
-          onClick={() => scrollToSection(projectsRef)}
-          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-            activeSection === "projects"
-              ? "bg-primary w-4 h-4"
-              : "bg-secondary/40 hover:bg-secondary/70"
-          }`}
-          aria-label="Go to projects"
-        />
-      </div>
+      <CollapsibleSidebar />
       {/* Home Section */}
       <section
         ref={homeRef}

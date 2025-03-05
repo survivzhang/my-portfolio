@@ -1,5 +1,6 @@
-"use client";
+"use strict";
 
+import React from "react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
