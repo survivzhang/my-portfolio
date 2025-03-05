@@ -16,12 +16,12 @@ export default function CollapsibleSidebar() {
       const currentScrollY = window.scrollY;
 
       // Hide sidebar when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      if (currentScrollY > lastScrollY && currentScrollY > 400) {
         // Scrolling down
         setIsOpen(false);
       } else if (currentScrollY < lastScrollY) {
         // Scrolling up
-        if (currentScrollY === 0) {
+        if (currentScrollY < 300) {
           // At the top of the page, fully show
           setIsOpen(true);
         }
@@ -36,7 +36,6 @@ export default function CollapsibleSidebar() {
 
   return (
     <div className="fixed right-0 top-0 bottom-0 z-50 flex items-center">
-
       {/* Sidebar */}
       <div
         className={`h-full bg-secondary transition-all duration-500 ease-in-out flex flex-col ${
@@ -48,7 +47,7 @@ export default function CollapsibleSidebar() {
         {/* Logo at top */}
         <div className="flex justify-center p-4">
           <svg
-            className="w-12 h-12 text-[#F9E2D2]"
+            className="w-12 h-12 text-sec_background"
             viewBox="0 0 24 24"
             fill="currentColor"
           >
@@ -60,7 +59,7 @@ export default function CollapsibleSidebar() {
         <div
           className={`${
             isOpen ? "mt-40" : "mt-16"
-          } bg-[#E8765D] p-4 flex justify-center`}
+          } bg-sec_background p-4 flex justify-center`}
         >
           <button
             onClick={toggleSidebar}
@@ -72,9 +71,8 @@ export default function CollapsibleSidebar() {
           </button>
         </div>
 
-
         {/* Social icons at bottom */}
-        <div className="mb-4 flex flex-col items-center space-y-4 text-[#E8765D]">
+        <div className="mb-4 flex flex-col items-center space-y-4 text-sec_background">
           <a href="#" className="hover:text-white transition-colors">
             <span className="text-2xl">@</span>
           </a>

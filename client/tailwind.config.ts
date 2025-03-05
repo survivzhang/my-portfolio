@@ -13,6 +13,7 @@ export default {
         foreground: "var(--foreground)",
         primary: "var(--primary)", // 添加酒红色变量
         secondary: "var(--secondary)", // 添加橄榄绿变量
+        sec_background: "var(--sec_background)", // 添加背景色变量
       },
     },
   },
