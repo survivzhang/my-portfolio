@@ -41,7 +41,7 @@ export default function CollapsibleSidebar() {
       <div
         className={`h-full bg-secondary transition-all duration-500 ease-in-out flex flex-col ${
           isOpen
-            ? "w-[158px]" /* Width from the first image */
+            ? "w-[220px]" /* Width from the first image */
             : "w-[60px]" /* Width from the second image */
         }`}
       >
@@ -59,7 +59,7 @@ export default function CollapsibleSidebar() {
         {/* Hamburger menu button */}
         <div
           className={`${
-            isOpen ? "mt-40" : "mt-16"
+            isOpen ? "mt-48" : "mt-32"
           } bg-sec_background p-4 flex justify-center`}
         >
           <button
@@ -73,8 +73,11 @@ export default function CollapsibleSidebar() {
         </div>
 
         {/* Social icons at bottom */}
-        <div className="mb-4 flex flex-col items-center space-y-4 text-sec_background">
-          <a href="#" className="transition-colors">
+        <div className="mt-auto mb-32 flex flex-col items-center space-y-6 text-sec_background">
+          <a
+            href="#"
+            className="transition-colors flex items-center justify-start w-full px-4"
+          >
             <Image
               src="/mail.svg"
               alt="mail"
@@ -83,8 +86,14 @@ export default function CollapsibleSidebar() {
               layout="fixed"
               className="hover:filter hover:brightness-125"
             />
+            {isOpen && (
+              <span className="ml-2 text-white">zzcnhy@gmail.com</span>
+            )}
           </a>
-          <a href="#" className="transition-colors">
+          <a
+            href="#"
+            className="transition-colors flex items-center justify-start w-full px-4"
+          >
             <Image
               src="/Linkedln.svg"
               alt="LinkedIn"
@@ -93,8 +102,12 @@ export default function CollapsibleSidebar() {
               layout="fixed"
               className="hover:filter hover:brightness-125"
             />
+            {isOpen && <span className="ml-2 text-white">LinkedIn</span>}
           </a>
-          <a href="#" className="transition-colors">
+          <a
+            href="#"
+            className="transition-colors flex items-center justify-start w-full px-4"
+          >
             <Image
               src="/github.svg"
               alt="GitHub"
@@ -103,8 +116,12 @@ export default function CollapsibleSidebar() {
               layout="fixed"
               className="hover:filter hover:brightness-125"
             />
+            {isOpen && <span className="ml-2 text-white">Github</span>}
           </a>
-          <a href="#" className="transition-colors">
+          <a
+            href="#"
+            className="transition-colors flex items-center justify-start w-full px-4"
+          >
             <Image
               src="/ins.svg"
               alt="Instagram"
@@ -113,6 +130,7 @@ export default function CollapsibleSidebar() {
               layout="fixed"
               className="hover:filter hover:brightness-125"
             />
+            {isOpen && <span className="ml-2 text-white">Instagram</span>}
           </a>
         </div>
       </div>
