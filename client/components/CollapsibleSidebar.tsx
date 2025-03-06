@@ -74,34 +74,44 @@ export default function CollapsibleSidebar() {
 
         {/* Social icons at bottom */}
         <div className="mb-4 flex flex-col items-center space-y-4 text-sec_background">
-          <a href="#" className="hover:text-white transition-colors">
-            <span className="text-2xl">@</span>
+          <a href="#" className="transition-colors">
+            <Image
+              src="/mail.svg"
+              alt="mail"
+              width={24}
+              height={24}
+              layout="fixed"
+              className="hover:filter hover:brightness-125"
+            />
           </a>
-          <a href="#" className="hover:text-white transition-colors">
+          <a href="#" className="transition-colors">
             <Image
               src="/Linkedln.svg"
               alt="LinkedIn"
               width={24}
               height={24}
               layout="fixed"
+              className="hover:filter hover:brightness-125"
             />
           </a>
-          <a href="#" className="hover:text-white transition-colors">
+          <a href="#" className="transition-colors">
             <Image
               src="/github.svg"
               alt="GitHub"
               width={24}
               height={24}
               layout="fixed"
+              className="hover:filter hover:brightness-125"
             />
           </a>
-          <a href="#" className="hover:text-white transition-colors">
+          <a href="#" className="transition-colors">
             <Image
               src="/ins.svg"
               alt="Instagram"
               width={28}
               height={28}
               layout="fixed"
+              className="hover:filter hover:brightness-125"
             />
           </a>
         </div>
