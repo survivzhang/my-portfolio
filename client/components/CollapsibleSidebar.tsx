@@ -75,7 +75,7 @@ export default function CollapsibleSidebar() {
         {/* Social icons at bottom */}
         <div className="mt-auto mb-32 flex flex-col items-center space-y-6 text-sec_background">
           <a
-            href="#"
+            href="mailto:zzcnhy@gmail.com"
             className="transition-colors flex items-center justify-start w-full px-4"
           >
             <Image
