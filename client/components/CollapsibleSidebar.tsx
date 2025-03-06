@@ -76,6 +76,7 @@ export default function CollapsibleSidebar() {
         <div className="mt-auto mb-32 flex flex-col items-center space-y-6 text-sec_background">
           <a
             href="mailto:zzcnhy@gmail.com"
+            target="_blank"
             className="transition-colors flex items-center justify-start w-full px-4"
           >
             <Image
@@ -91,7 +92,8 @@ export default function CollapsibleSidebar() {
             )}
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/cold1998zichen/"
+            target="_blank"
             className="transition-colors flex items-center justify-start w-full px-4"
           >
             <Image
@@ -105,7 +107,8 @@ export default function CollapsibleSidebar() {
             {isOpen && <span className="ml-2 text-white">LinkedIn</span>}
           </a>
           <a
-            href="#"
+            href="https://github.com/survivzhang"
+            target="_blank"
             className="transition-colors flex items-center justify-start w-full px-4"
           >
             <Image
@@ -119,7 +122,8 @@ export default function CollapsibleSidebar() {
             {isOpen && <span className="ml-2 text-white">Github</span>}
           </a>
           <a
-            href="#"
+            href="https://www.instagram.com/zhang_zichen98/"
+            target="_blank"
             className="transition-colors flex items-center justify-start w-full px-4"
           >
             <Image
