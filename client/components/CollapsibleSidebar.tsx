@@ -46,9 +46,9 @@ export default function CollapsibleSidebar() {
         }`}
       >
         {/* Logo at top */}
-        <div className="flex justify-center p-4">
+        <div className="flex justify-center p-4 mt-5">
           <Image
-            src="/weblogo.svg"
+            src="/naruto.png"
             alt="Logo"
             width={isOpen ? 60 : 40}
             height={isOpen ? 60 : 40}
