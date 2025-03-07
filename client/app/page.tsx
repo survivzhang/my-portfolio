@@ -198,22 +198,6 @@ export default function Home() {
 
   return (
     <div className="bg-background min-h-screen flex">
-      {/* Left side - Profile SVG */}
-      <div className="absolute left-0 top-0 bottom-0 z-50 flex items-center">
-        <div className="h-full flex flex-col w-[220px] overflow-hidden">
-          <div className="flex justify-center items-center h-full">
-            <Image
-              src="/profilo.svg"
-              alt="Profile"
-              width={600}
-              height={800}
-              layout="fixed"
-              className="transform translate-x-1/2"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Main content */}
       <div className="flex-grow">
         {/* Home Section */}
@@ -221,28 +205,41 @@ export default function Home() {
           ref={homeRef}
           className="min-h-screen flex items-center justify-center pt-16"
         >
-          <div className="flex-grow flex flex-col justify-center items-center text-center px-6 py-16">
-            <h1 className="text-5xl font-serif font-bold text-primary mb-6">
-              Welcome to My Portfolio
-            </h1>
-            <p className="text-lg text-foreground max-w-2xl mb-8 font-serif">
-              Explore my work, design philosophy, and creative journey. I build
-              web experiences with a touch of vintage elegance.
-            </p>
+          <div className="flex-grow flex flex-row justify-center items-center text-center px-6 py-16">
+            {/* Profile SVG - now in home section */}
+            <div className="md:w-1/5 flex justify-center items-center ">
+              <Image
+                src="/profilo.svg"
+                alt="Profile"
+                width={500}
+                height={700}
+                className="max-w-full h-auto mr-[300px] transform scale-150"
+              />
+            </div>
 
-            <div className="mt-6 flex gap-4">
-              <button
-                onClick={() => scrollToSection(projectsRef)}
-                className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
-              >
-                View Projects
-              </button>
-              <button
-                onClick={() => scrollToSection(aboutRef)}
-                className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
-              >
-                About Me
-              </button>
+            <div className="md:w-4/5 flex flex-col justify-center items-start  pl-12">
+              <h1 className="text-5xl font-serif font-bold text-primary mb-6">
+                Welcome to My Portfolio
+              </h1>
+              <p className="text-lg text-foreground max-w-2xl mb-8 font-serif">
+                Explore my work, design philosophy, and creative journey. I
+                build web experiences with a touch of vintage elegance.
+              </p>
+
+              <div className="mt-6 flex gap-4">
+                <button
+                  onClick={() => scrollToSection(projectsRef)}
+                  className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
+                >
+                  View Projects
+                </button>
+                <button
+                  onClick={() => scrollToSection(aboutRef)}
+                  className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
+                >
+                  About Me
+                </button>
+              </div>
             </div>
           </div>
         </section>
