@@ -205,19 +205,25 @@ export default function Home() {
           ref={homeRef}
           className="min-h-screen flex items-center justify-center pt-16"
         >
-          <div className="flex-grow flex flex-row justify-center items-center text-center px-6 py-16">
-            {/* Profile SVG - now in home section */}
-            <div className="md:w-1/5 flex justify-center items-center ">
-              <Image
-                src="/profilo.svg"
-                alt="Profile"
-                width={500}
-                height={700}
-                className="max-w-full h-auto mr-[300px] transform scale-150"
-              />
+          <div className="flex-grow flex flex-row items-center px-6 py-16 relative">
+            {/* 左侧头像 - 只露出一半 */}
+            <div
+              className="absolute left-0 overflow-hidden"
+              style={{ width: "15%" }}
+            >
+              <div className="relative" style={{ left: "-120%" }}>
+                <Image
+                  src="/profilo.svg"
+                  alt="Profile"
+                  width={600}
+                  height={800}
+                  className="max-w-none h-auto transform scale-100"
+                />
+              </div>
             </div>
 
-            <div className="md:w-4/5 flex flex-col justify-center items-start  pl-12">
+            {/* 中间内容 - 居中在剩余空间 */}
+            <div className="w-full flex flex-col items-center text-center transform -translate-x-[40px]">
               <h1 className="text-5xl font-serif font-bold text-primary mb-6">
                 Welcome to My Portfolio
               </h1>
