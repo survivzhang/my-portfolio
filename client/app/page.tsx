@@ -38,21 +38,31 @@ const projects = [
 const aboutSections = [
   {
     id: 1,
-    title: "Who I Am",
+    title: "I'M ZICHEN ZHANG",
+    characteristic: "WEB DEVELOPER, POSTGRADUATE STUDENT, CREATIVE THINKER.",
     content:
-      "I'm Zichen, a passionate developer who loves building meaningful projects that make a difference.",
+      "I am a postgraduate student in UWA, majoring in Information Technology. I have a passion for web development and design, and I love to create user-friendly and responsive applications.",
   },
   {
     id: 2,
-    title: "What I Do",
+    title: "CREATING MEANINGFUL EXPERIENCES",
+    characteristic: "DEDICATED TO CLEAN CODE AND USER-CENTERED SOLUTIONS",
     content:
-      "I specialize in full-stack development, working with technologies like React, Next.js, and Tailwind CSS to create responsive and user-friendly applications.",
+      "Throughout my studies and projects, I've focused on building responsive, accessible web applications that solve real problems. I believe in writing maintainable code that balances technical excellence with practical user needs.",
   },
   {
     id: 3,
-    title: "My Journey",
+    title: "MY CORE VALUES",
+    characteristic: "PASSIONATE, COLLABORATIVE, COMMUNICATIVE",
     content:
-      "Started coding as a hobby, now I'm on a mission to become a professional programmer, exploring new tools and frameworks every day.",
+      "I approach every project with genuine enthusiasm, focusing on creating meaningful user experiences. As a team member, I believe the best results come from diverse ideas. My volunteer experience as a metro station assistant and youth competition referee has strengthened my communication skills and ability to work with people from all backgrounds.",
+  },
+  {
+    id: 4,
+    title: "COMMUNITY INVOLVEMENT",
+    characteristic: "GIVING BACK THROUGH VOLUNTEERING",
+    content:
+      "I believe in contributing to the community that has supported me. Through volunteering at metro stations and refereeing children's competitions, I've developed patience, quick decision-making abilities, and learned how to remain fair and objective under pressure - skills that translate directly to my work as a developer.",
   },
 ];
 
@@ -149,7 +159,7 @@ export default function Home() {
 
               setTimeout(() => {
                 setIsAnimating(false);
-              }, 600);
+              }, 200);
             }
           }
         });
@@ -255,7 +265,7 @@ export default function Home() {
                 I am a postgraduate student in UWA,
               </p>
               <p className="text-xl text-foreground mb-2 font-serif">
-                Web Designer, basketball player
+                Web Developer, basketball player
               </p>
               <p className="text-xl text-foreground mb-8 font-serif">
                 ... and just a human
@@ -264,7 +274,7 @@ export default function Home() {
           </div>
           {showArrow && (
             <div
-              className="absolute bottom-10 right-80  transition-opacity duration-300"
+              className="absolute bottom-10 right-80  transition-opacity duration-100"
               style={{ opacity: showArrow ? 1 : 0 }}
             >
               <svg
@@ -294,26 +304,43 @@ export default function Home() {
 
             <div className="flex flex-col md:flex-row max-w-7xl mx-auto px-6">
               {/* Left side - About sections */}
-              <div className="md:w-1/2 flex flex-col space-y-[80vh] md:pr-8">
+              <div className="md:w-1/2 flex flex-col space-y-[80vh] md:pr-20">
                 {aboutSections.map((section, index) => (
                   <div
                     key={section.id}
                     ref={(el) => {
                       aboutSectionRefs.current[index] = el;
                     }}
-                    className={`min-h-screen flex items-center transition-all duration-300 ${
+                    className={`min-h-screen flex items-center transition-all duration-100 ${
                       activeAboutSection === index
                         ? "opacity-100 scale-100"
                         : "opacity-50 scale-95"
                     }`}
                   >
-                    <div>
-                      <h2 className="text-4xl font-serif font-bold text-primary mb-4">
+                    <div className="w-full flex flex-col h-[70vh]">
+                      {" "}
+                      {/* 设置固定高度容器 */}
+                      {/* 小标题 - 距顶部有间距 */}
+                      <p className="text-lg text-secondary pt-16 mb-auto">
                         {section.title}
+                      </p>{" "}
+                      {/* pt-16添加顶部间距，mb-auto推到顶部 */}
+                      {/* 特征标题与装饰点 - 自然居中 */}
+                      <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary my-8 relative">
+                        {section.characteristic}
+                        <span
+                          className="absolute w-2 h-2 bg-secondary rounded-full"
+                          style={{ top: "-8px", left: "0" }}
+                        ></span>
                       </h2>
-                      <p className="text-foreground text-lg leading-relaxed font-serif">
-                        {section.content}
-                      </p>
+                      {/* 内容 - 右侧偏移，距底部有间距 */}
+                      <div className="ml-auto w-2/3 mt-auto pb-16">
+                        {" "}
+                        {/* mt-auto推到底部，pb-16添加底部间距 */}
+                        <p className="text-foreground text-lg leading-relaxed font-serif">
+                          {section.content}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -326,12 +353,12 @@ export default function Home() {
                     Your Photo Here
                   </div>
                   {/* Uncomment when you have an actual image */}
-                  {/* <Image
-                    src="/images/my-photo.jpg"
+                  <Image
+                    src="/myPhoto.png"
                     alt="Zichen"
                     fill
                     className="object-cover"
-                  /> */}
+                  />
                 </div>
               </div>
             </div>
@@ -342,7 +369,7 @@ export default function Home() {
                 <button
                   key={index}
                   onClick={() => scrollToAboutSection(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-3 h-3 rounded-full transition-all duration-100 ${
                     activeAboutSection === index && activeSection === "about"
                       ? "bg-primary w-4 h-4"
                       : "bg-secondary/40 hover:bg-secondary/70"
@@ -368,11 +395,11 @@ export default function Home() {
                   ref={(el) => {
                     projectRefs.current[0] = el;
                   }}
-                  className="relative w-full h-[70vh] overflow-hidden rounded-lg shadow-xl bg-white flex flex-col md:flex-row"
+                  className="relative w-full h-[70vh] overflow-hidden rounded-lg  flex flex-col md:flex-row"
                 >
                   <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
                     <div
-                      className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                      className={`absolute inset-0 transition-all duration-100 ease-in-out ${
                         activeProject === 0 && !isAnimating
                           ? "opacity-100 transform-none"
                           : "opacity-0"
@@ -388,7 +415,7 @@ export default function Home() {
                   </div>
                   <div className="md:w-1/2 p-8 flex flex-col">
                     <div
-                      className={`transition-all duration-500 ease-in-out ${
+                      className={`transition-all duration-100 ease-in-out ${
                         activeProject === 0 && !isAnimating
                           ? "opacity-100 transform-none"
                           : "opacity-0"
@@ -411,42 +438,13 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
-                    <div className="mt-auto flex justify-between items-center">
-                      <a
-                        href={projects[0].link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block bg-secondary text-white px-6 py-3 rounded-md hover:bg-primary transition duration-300"
-                      >
-                        View Project
-                      </a>
-                      <button
-                        onClick={() => scrollToProject(1)}
-                        className="text-secondary flex flex-col items-center group"
-                      >
-                        <span className="mb-2">See more projects</span>
-                        <svg
-                          className="w-6 h-6 animate-bounce group-hover:text-primary"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                          />
-                        </svg>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Other Projects */}
-            <div className="space-y-[100vh] px-6">
+            <div className="space-y-[20vh] px-6">
               {projects.slice(1).map((project, index) => {
                 const actualIndex = index + 1;
 
@@ -459,10 +457,10 @@ export default function Home() {
                     className="min-h-screen flex items-center justify-center"
                   >
                     <div className="max-w-7xl w-full">
-                      <div className="flex flex-col md:flex-row gap-8 bg-white rounded-lg shadow-xl overflow-hidden">
+                      <div className="flex flex-col md:flex-row gap-8  rounded-lg  overflow-hidden">
                         <div className="md:w-1/2 relative h-64 md:h-[500px] overflow-hidden">
                           <div
-                            className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                            className={`absolute inset-0 transition-all duration-100 ease-in-out ${
                               activeProject === actualIndex && !isAnimating
                                 ? "opacity-100 transform-none"
                                 : "opacity-0"
@@ -478,7 +476,7 @@ export default function Home() {
                         </div>
                         <div className="md:w-1/2 p-8 flex flex-col">
                           <div
-                            className={`transition-all duration-500 ease-in-out ${
+                            className={`transition-all duration-100 ease-in-out ${
                               activeProject === actualIndex && !isAnimating
                                 ? "opacity-100 transform-none"
                                 : "opacity-0"
@@ -501,38 +499,12 @@ export default function Home() {
                               ))}
                             </div>
                           </div>
-                          <div className="mt-auto">
-                            <a
-                              href={project.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-block bg-secondary text-white px-6 py-3 rounded-md hover:bg-primary transition duration-300"
-                            >
-                              View Project
-                            </a>
-                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 );
               })}
-            </div>
-
-            {/* Project navigation dots */}
-            <div className="fixed right-8 top-1/2 transform -translate-y-1/2 flex flex-col space-y-4 z-40">
-              {projects.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => scrollToProject(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    activeProject === index && activeSection === "projects"
-                      ? "bg-primary w-4 h-4"
-                      : "bg-secondary/40 hover:bg-secondary/70"
-                  }`}
-                  aria-label={`Go to project ${index + 1}`}
-                />
-              ))}
             </div>
           </div>
         </section>
