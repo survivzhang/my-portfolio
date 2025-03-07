@@ -71,6 +71,7 @@ export default function Home() {
   // Refs for about sections and projects
   const aboutSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [showArrow, setShowArrow] = useState(true);
 
   // Set up intersection observers
   useEffect(() => {
@@ -195,6 +196,20 @@ export default function Home() {
       block: "center",
     });
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowArrow(false);
+      } else {
+        setShowArrow(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className="bg-background min-h-screen flex">
@@ -224,30 +239,50 @@ export default function Home() {
 
             {/* 中间内容 - 居中在剩余空间 */}
             <div className="w-full flex flex-col items-center text-center transform -translate-x-[40px]">
-              <h1 className="text-5xl font-serif font-bold text-primary mb-6">
-                Welcome to My Portfolio
-              </h1>
-              <p className="text-lg text-foreground max-w-2xl mb-8 font-serif">
-                Explore my work, design philosophy, and creative journey. I
-                build web experiences with a touch of vintage elegance.
+              <p className="text-xl text-secondary mb-4 font-serif">
+                Hey there! My name is
               </p>
-
-              <div className="mt-6 flex gap-4">
-                <button
-                  onClick={() => scrollToSection(projectsRef)}
-                  className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
-                >
-                  View Projects
-                </button>
-                <button
-                  onClick={() => scrollToSection(aboutRef)}
-                  className="bg-secondary text-white px-8 py-3 rounded-lg hover:bg-primary transition duration-300"
-                >
-                  About Me
-                </button>
-              </div>
+              <h1 className="text-5xl font-serif font-bold text-primary mb-2">
+                ZICHEN ZHANG
+              </h1>
+              <p className="text-xl text-secondary mb-4 font-serif">
+                or you can call me
+              </p>
+              <h2 className="text-4xl font-serif font-bold text-primary mb-6">
+                ALEX
+              </h2>
+              <p className="text-xl text-foreground mb-2 font-serif">
+                I am a postgraduate student in UWA,
+              </p>
+              <p className="text-xl text-foreground mb-2 font-serif">
+                Web Designer, basketball player
+              </p>
+              <p className="text-xl text-foreground mb-8 font-serif">
+                ... and just a human
+              </p>
             </div>
           </div>
+          {showArrow && (
+            <div
+              className="absolute bottom-10 right-80  transition-opacity duration-300"
+              style={{ opacity: showArrow ? 1 : 0 }}
+            >
+              <svg
+                className="w-10 h-10 text-primary animate-bounce cursor-pointer"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                onClick={() => scrollToSection(aboutRef)}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            </div>
+          )}
         </section>
 
         {/* About Section */}
