@@ -3,7 +3,7 @@ import React from "react";
 import CollapsibleSidebar from "@/components/CollapsibleSidebar";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { stat } from "fs";
+// import { stat } from "fs";
 
 // Project data
 const projects = [
