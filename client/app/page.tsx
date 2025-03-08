@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 import CollapsibleSidebar from "@/components/CollapsibleSidebar";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -199,13 +198,6 @@ export default function Home() {
     });
   };
 
-  // Scroll to project
-  const scrollToProject = (index: number) => {
-    projectRefs.current[index]?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  };
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 100) {
