@@ -3,6 +3,7 @@ import React from "react";
 import CollapsibleSidebar from "@/components/CollapsibleSidebar";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { stat } from "fs";
 
 // Project data
 const projects = [
@@ -10,26 +11,29 @@ const projects = [
     id: 1,
     title: "Blue Crew",
     description: "A website made for a environmental protection organization",
-    image: "/images/blue-crew.png",
+    image: "/blue-crew.png",
     tags: ["Vue", "Django", "Tailwind CSS"],
-    link: "https://bluecrew.vercel.app/",
+    link: "https://blingo.com.au/",
+    status: "completed",
   },
   {
     id: 2,
-    title: "Road to a professional programmer",
-    description:
-      "A website for the beginners who want to become a professional programmer, to choose which side they want to go",
-    image: "/images/road-to-professional-programmer.png",
-    tags: ["React", "Flask", "Tailwind CSS", "AWS"],
-    link: "https://road-to-professional-programmer.vercel.app/",
+    title: "Zichen's Portfolio",
+    description: "My personal portfolio website",
+    image: "/zichen.jpg",
+    tags: ["Next.js", "Tailwind CSS"],
+    link: "https://coldalex1998.vercel.app/",
+    status: "completed",
   },
   {
     id: 3,
-    title: "Zichen's Portfolio",
-    description: "My personal portfolio website",
-    image: "/images/zichen-portfolio.png",
-    tags: ["Next.js", "Tailwind CSS"],
-    link: "https://zichen-zhang.vercel.app/",
+    title: "Road to a professional programmer",
+    description:
+      "A website for the beginners who want to become a professional programmer, to choose which side they want to go",
+    image: "/frontend.png",
+    tags: ["React", "Flask", "Tailwind CSS", "AWS"],
+    link: "https://road-to-professional-programmer.vercel.app/",
+    status: "still in progress",
   },
 ];
 
