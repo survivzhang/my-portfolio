@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function CollapsibleSidebar() {
-  // Change this line from true to false for mobile default state
   const [isOpen, setIsOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -15,11 +14,10 @@ export default function CollapsibleSidebar() {
       const mobile = window.innerWidth < 768; // 768px is the md breakpoint in Tailwind
       setIsMobile(mobile);
 
-      // Set isOpen to true for desktop, false for mobile
-      if (!mobile && !isOpen) {
-        setIsOpen(true);
-      } else if (mobile && isOpen) {
-        setIsOpen(false);
+      // Only set isOpen on initial load or when changing from mobile to desktop
+      // Don't override user interactions
+      if (mobile === false && !isOpen) {
+        setIsOpen(true); // Desktop starts open
       }
     };
 
@@ -31,7 +29,7 @@ export default function CollapsibleSidebar() {
 
     // Clean up event listener
     return () => window.removeEventListener("resize", checkIfMobile);
-  }, [isOpen]);
+  }, []); // Remove isOpen from dependency array to prevent interference
 
   // Toggle sidebar open/closed
   const toggleSidebar = () => {
@@ -188,7 +186,7 @@ export default function CollapsibleSidebar() {
     );
   }
 
-  // Desktop sidebar component (unchanged)
+  // Desktop sidebar component
   return (
     <div className="fixed right-0 top-0 bottom-0 z-50 flex items-center">
       {/* Sidebar */}
