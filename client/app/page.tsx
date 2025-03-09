@@ -109,7 +109,6 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [activeAboutSection, setActiveAboutSection] = useState(0);
   const [activeProject, setActiveProject] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
 
   // Refs for about sections and projects
   const desktopAboutSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -351,15 +350,15 @@ const mobileAboutObserver = new IntersectionObserver(
           </section>
 
           {/* About Section - Desktop */}
-          <section ref={aboutRef} className="min-h-screen pt-16">
-            <div className="py-16">
+          <section ref={aboutRef} className="min-h-screen pt-10">
+            <div >
               <h2 className="text-4xl font-serif font-bold text-primary mb-12 text-center">
                 About Me
               </h2>
 
               <div className="flex flex-row max-w-7xl mx-auto px-6">
                 {/* Left side - About sections */}
-                <div className="w-1/2 flex flex-col space-y-[80vh] pr-20">
+                <div className="w-1/2 flex flex-col space-y-[60vh] pr-20">
                   {aboutSections.map((section, index) => (
                     <div
                       key={section.id}
@@ -368,7 +367,7 @@ const mobileAboutObserver = new IntersectionObserver(
                       }}
                       className="min-h-screen flex items-center"
                     >
-                      <div className="w-full flex flex-col h-[70vh]">
+                      <div className="w-full flex flex-col h-[100vh]">
                         <p className="text-lg text-secondary pt-16 mb-auto">
                           {section.title}
                         </p>
@@ -390,7 +389,7 @@ const mobileAboutObserver = new IntersectionObserver(
                 </div>
 
                 {/* Right side - Photo */}
-                <div className="w-1/2 flex items-center justify-center sticky top-24 h-screen">
+                <div className="w-1/2 flex items-center justify-center sticky top-20 h-screen">
                   <div className="relative w-96 h-96 rounded-full overflow-hidden shadow-xl border-4 border-secondary">
                     <Image
                       src="/myPhoto.png"
