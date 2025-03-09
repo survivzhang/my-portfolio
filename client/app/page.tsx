@@ -112,7 +112,8 @@ export default function Home() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Refs for about sections and projects
-  const aboutSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const desktopAboutSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileAboutSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [showArrow, setShowArrow] = useState(true);
 
@@ -148,39 +149,65 @@ export default function Home() {
     });
 
     // For about sections
-    aboutSectionRefs.current = aboutSectionRefs.current.slice(
-      0,
-      aboutSections.length
-    );
+      desktopAboutSectionRefs.current = desktopAboutSectionRefs.current.slice(
+        0,
+        aboutSections.length
+      );
 
-    const aboutObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = aboutSectionRefs.current.findIndex(
-              (ref) => ref === entry.target
-            );
-            if (index !== -1) {
-                      if (
-                        entry.isIntersecting &&
-                        (index !== activeAboutSection ||
-                          entry.intersectionRatio > 0.8)
-                      ) {
-                        setActiveAboutSection(index);
-                      }
+      const desktopAboutObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const index = desktopAboutSectionRefs.current.findIndex(
+                (ref) => ref === entry.target
+              );
+              if (
+                index !== -1 &&
+                (index !== activeAboutSection || entry.intersectionRatio > 0.8)
+              ) {
+                setActiveAboutSection(index);
+              }
             }
-          }
-        });
-      },
-      {
-        threshold: [0.5, 0.8],
-        rootMargin: "-10px 0px",
-      }
-    );
+          });
+        },
+        {
+          threshold: [0.5, 0.8],
+          rootMargin: "-10px 0px",
+        }
+      );
 
-    aboutSectionRefs.current.forEach((ref) => {
-      if (ref) aboutObserver.observe(ref);
+  desktopAboutSectionRefs.current.forEach((ref) => {
+    if (ref) desktopAboutObserver.observe(ref);
+  });
+          mobileAboutSectionRefs.current = mobileAboutSectionRefs.current.slice(
+            0,
+            aboutSections.length
+          );
+const mobileAboutObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = mobileAboutSectionRefs.current.findIndex(
+          (ref) => ref === entry.target
+        );
+        if (
+          index !== -1 &&
+          (index !== activeAboutSection || entry.intersectionRatio > 0.8)
+        ) {
+          setActiveAboutSection(index);
+        }
+      }
     });
+  },
+  {
+    threshold: [0.5, 0.8],
+    rootMargin: "-10px 0px",
+  }
+);
+      mobileAboutSectionRefs.current.forEach((ref) => {
+        if (ref) mobileAboutObserver.observe(ref);
+      });
+
 
     // For projects
     projectRefs.current = projectRefs.current.slice(0, projects.length);
@@ -192,13 +219,8 @@ export default function Home() {
             const index = projectRefs.current.findIndex(
               (ref) => ref === entry.target
             );
-            if (index !== -1 && index !== activeProject) {
-              setIsAnimating(true);
+            if (index !== -1) {
               setActiveProject(index);
-
-              setTimeout(() => {
-                setIsAnimating(false);
-              }, 200);
             }
           }
         });
@@ -215,10 +237,11 @@ export default function Home() {
 
     return () => {
       mainObserver.disconnect();
-      aboutObserver.disconnect();
+      desktopAboutObserver.disconnect();
+      mobileAboutObserver.disconnect();
       projectObserver.disconnect();
     };
-  }, [activeProject]);
+  }, [activeProject, activeAboutSection]);
 
   // Scroll to section function
   const scrollToSection = (
@@ -232,7 +255,7 @@ export default function Home() {
 
   // Scroll to about section
   const scrollToAboutSection = (index: number) => {
-    aboutSectionRefs.current[index]?.scrollIntoView({
+    desktopAboutSectionRefs.current[index]?.scrollIntoView({
       behavior: "smooth",
       block: "center",
     });
@@ -341,7 +364,7 @@ export default function Home() {
                     <div
                       key={section.id}
                       ref={(el) => {
-                        aboutSectionRefs.current[index] = el;
+                        desktopAboutSectionRefs.current[index] = el;
                       }}
                       className="min-h-screen flex items-center"
                     >
@@ -409,11 +432,7 @@ export default function Home() {
                           } overflow-hidden`}
                         >
                           <div
-                            className={`absolute inset-0 transition-all duration-100 ease-in-out ${
-                              activeProject === index && !isAnimating
-                                ? "opacity-100 transform-none"
-                                : "opacity-0"
-                            }`}
+                            className= "absolute inset-0 transition-all duration-100 ease-in-out"
                           >
                             <Image
                               src={project.image}
@@ -427,8 +446,8 @@ export default function Home() {
                           <div
                             className={`transition-all duration-100 ease-in-out space-y-12 ${
                               activeProject === index && !isAnimating
-                                ? "opacity-100 transform-none"
-                                : "opacity-0"
+                                ? "ring-2 ring-primary" // 使用边框高亮当前活动项目
+                                : ""
                             }`}
                           >
                             <h3 className="text-3xl font-serif font-bold text-primary mb-4">
@@ -593,7 +612,7 @@ export default function Home() {
                   <div
                     key={section.id}
                     ref={(el) => {
-                      aboutSectionRefs.current[index] = el;
+                      mobileAboutSectionRefs.current[index] = el;
                     }}
                     className={`p-5 rounded-xl transition-all duration-300 ${
                       activeAboutSection === index
@@ -635,7 +654,7 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => {
-                      aboutSectionRefs.current[index]?.scrollIntoView({
+                      mobileAboutSectionRefs.current[index]?.scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
                       });
@@ -671,11 +690,7 @@ export default function Home() {
                 >
                   {/* Mobile Layout - Image as background with text overlay */}
                   <div
-                    className={`relative rounded-lg overflow-hidden h-[85vh] w-full ${
-                      activeProject === index && !isAnimating
-                        ? "opacity-100 transform-none"
-                        : "opacity-0"
-                    }`}
+                    className="relative rounded-lg overflow-hidden h-[85vh] w-full"
                   >
                     {/* Background Image with Overlay */}
                     <div className="absolute inset-0">
