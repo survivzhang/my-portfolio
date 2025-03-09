@@ -378,133 +378,99 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
+        {/* Projects Section */}
         <section ref={projectsRef} className="min-h-screen pt-16">
           <div className="py-16">
             <h2 className="text-4xl font-serif font-bold text-primary mb-12 text-center">
               My Projects
             </h2>
 
-            {/* First Project (Hero) */}
-            <div className="min-h-screen flex items-center justify-center px-6">
-              <div className="max-w-7xl w-full">
+            {/* All Projects */}
+            <div className="space-y-[20vh] px-6">
+              {projects.map((project, index) => (
                 <div
+                  key={project.id}
                   ref={(el) => {
-                    projectRefs.current[0] = el;
+                    projectRefs.current[index] = el;
                   }}
-                  className="relative w-full h-[70vh] overflow-hidden rounded-lg  flex flex-col md:flex-row"
+                  className="min-h-screen flex items-center justify-center"
                 >
-                  <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+                  <div className="max-w-7xl w-full">
                     <div
-                      className={`absolute inset-0 transition-all duration-100 ease-in-out ${
-                        activeProject === 0 && !isAnimating
-                          ? "opacity-100 transform-none"
-                          : "opacity-0"
-                      }`}
+                      className={`flex flex-col md:flex-row ${
+                        index === 0 ? "h-[70vh]" : "gap-8"
+                      } rounded-lg overflow-hidden`}
                     >
-                      <Image
-                        src={projects[0].image}
-                        alt={projects[0].title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div className="md:w-1/2 p-8 flex flex-col">
-                    <div
-                      className={`transition-all duration-100 ease-in-out ${
-                        activeProject === 0 && !isAnimating
-                          ? "opacity-100 transform-none"
-                          : "opacity-0"
-                      }`}
-                    >
-                      <h3 className="text-3xl font-serif font-bold text-primary mb-4">
-                        {projects[0].title}
-                      </h3>
-                      <p className="text-foreground mb-6 text-lg font-serif">
-                        {projects[0].description}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mb-8">
-                        {projects[0].tags.map((tag, index) => (
-                          <span
-                            key={index}
-                            className="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                      <div
+                        className={`md:w-1/2 relative ${
+                          index === 0 ? "h-64 md:h-auto" : "h-64 md:h-[500px]"
+                        } overflow-hidden`}
+                      >
+                        <div
+                          className={`absolute inset-0 transition-all duration-100 ease-in-out ${
+                            activeProject === index && !isAnimating
+                              ? "opacity-100 transform-none"
+                              : "opacity-0"
+                          }`}
+                        >
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      </div>
+                      <div className="md:w-1/2 p-8 flex flex-col">
+                        <div
+                          className={`transition-all duration-100 ease-in-out ${
+                            activeProject === index && !isAnimating
+                              ? "opacity-100 transform-none"
+                              : "opacity-0"
+                          }`}
+                        >
+                          <h3 className="text-3xl font-serif font-bold text-primary mb-4">
+                            {project.title}
+                          </h3>
+                          <p className="text-foreground mb-6 text-lg font-serif">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-8">
+                            {project.tags.map((tag, tagIndex) => (
+                              <span
+                                key={tagIndex}
+                                className="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <div>
+                            {project.status === "completed" ? (
+                              <button
+                                className="px-6 py-2 bg-primary text-white rounded-full"
+                                onClick={() => window.open(project.link)}
+                              >
+                                View Project
+                              </button>
+                            ) : (
+                              <button
+                                className="px-6 py-2 bg-secondary text-white rounded-full"
+                                disabled
+                              >
+                                In Progress
+                              </button>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Other Projects */}
-            <div className="space-y-[20vh] px-6">
-              {projects.slice(1).map((project, index) => {
-                const actualIndex = index + 1;
-
-                return (
-                  <div
-                    key={project.id}
-                    ref={(el) => {
-                      projectRefs.current[actualIndex] = el;
-                    }}
-                    className="min-h-screen flex items-center justify-center"
-                  >
-                    <div className="max-w-7xl w-full">
-                      <div className="flex flex-col md:flex-row gap-8  rounded-lg  overflow-hidden">
-                        <div className="md:w-1/2 relative h-64 md:h-[500px] overflow-hidden">
-                          <div
-                            className={`absolute inset-0 transition-all duration-100 ease-in-out ${
-                              activeProject === actualIndex && !isAnimating
-                                ? "opacity-100 transform-none"
-                                : "opacity-0"
-                            }`}
-                          >
-                            <Image
-                              src={project.image}
-                              alt={project.title}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                        </div>
-                        <div className="md:w-1/2 p-8 flex flex-col">
-                          <div
-                            className={`transition-all duration-100 ease-in-out ${
-                              activeProject === actualIndex && !isAnimating
-                                ? "opacity-100 transform-none"
-                                : "opacity-0"
-                            }`}
-                          >
-                            <h3 className="text-3xl font-serif font-bold text-primary mb-4">
-                              {project.title}
-                            </h3>
-                            <p className="text-foreground mb-6 text-lg font-serif">
-                              {project.description}
-                            </p>
-                            <div className="flex flex-wrap gap-2 mb-8">
-                              {project.tags.map((tag, tagIndex) => (
-                                <span
-                                  key={tagIndex}
-                                  className="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              ))}
             </div>
           </div>
         </section>
-
         {/* Footer */}
         <footer className="bg-secondary text-white p-4">
           <div className="max-w-7xl mx-auto text-center">
