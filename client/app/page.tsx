@@ -256,7 +256,7 @@ export default function Home() {
           ref={homeRef}
           className="min-h-screen flex items-center justify-center pt-16"
         >
-          <div className="flex-grow flex flex-row items-center px-6 py-16 relative">
+          <div className="hidden md:flex flex-grow flex-row items-center px-6 py-16 relative">
             {/* 左侧头像 - 只露出一半 */}
             <div
               className="absolute left-0 overflow-hidden"
@@ -298,6 +298,58 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          {/* Mobile Layout */}
+          <div className="md:hidden flex-grow flex flex-col items-center px-6 py-8 relative h-full">
+            {/* Background graphic element */}
+            <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 z-0">
+              <Image
+                src="/profilo.svg"
+                alt="Background profile"
+                fill
+                className="object-cover object-right-top"
+              />
+            </div>
+
+            {/* Content with gradient background */}
+            <div className="w-full flex flex-col items-center text-center z-10 mt-12">
+              <div className="mb-6 relative">
+                <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-secondary mx-auto">
+                  <Image
+                    src="/myPhoto.png"
+                    alt="Zichen"
+                    width={144}
+                    height={144}
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              <p className="text-lg text-secondary mb-3 font-serif">
+                Hey there! My name is
+              </p>
+              <h1 className="text-4xl font-serif font-bold text-primary mb-2">
+                ZICHEN ZHANG
+              </h1>
+              <p className="text-lg text-secondary mb-3 font-serif">
+                or you can call me
+              </p>
+              <h2 className="text-3xl font-serif font-bold text-primary mb-5">
+                ALEX
+              </h2>
+              <div className="space-y-1 mb-6 px-4 py-4 bg-secondary/5 rounded-lg">
+                <p className="text-lg text-foreground font-serif">
+                  I am a postgraduate student in UWA,
+                </p>
+                <p className="text-lg text-foreground font-serif">
+                  Web Developer, basketball player
+                </p>
+                <p className="text-lg text-foreground font-serif">
+                  ... and just a human
+                </p>
+              </div>
+            </div>
+          </div>
           {showArrow && (
             <div
               className="absolute bottom-10 right-80  transition-opacity duration-100"
@@ -328,7 +380,7 @@ export default function Home() {
               About Me
             </h2>
 
-            <div className="flex flex-col md:flex-row max-w-7xl mx-auto px-6">
+            <div className="hideden md:flex flex-col md:flex-row max-w-7xl mx-auto px-6">
               {/* Left side - About sections */}
               <div className="md:w-1/2 flex flex-col space-y-[80vh] md:pr-20">
                 {aboutSections.map((section, index) => (
@@ -388,6 +440,82 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            <div className="md:hidden max-w-7xl mx-auto px-4">
+              {/* Photo at top for mobile */}
+              <div className="flex justify-center mb-12">
+                <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-xl border-4 border-secondary">
+                  <Image
+                    src="/myPhoto.png"
+                    alt="Zichen"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-16">
+                {aboutSections.map((section, index) => (
+                  <div
+                    key={section.id}
+                    ref={(el) => {
+                      aboutSectionRefs.current[index] = el;
+                    }}
+                    className={`p-5 rounded-xl transition-all duration-300 ${
+                      activeAboutSection === index
+                        ? "bg-secondary/10 border border-secondary/20"
+                        : "bg-background"
+                    }`}
+                  >
+                    <div className="space-y-4">
+                      {/* Title */}
+                      <p className="text-base text-secondary font-medium">
+                        {section.title}
+                      </p>
+
+                      {/* Characteristic with dot */}
+                      <h2 className="text-2xl font-serif font-bold text-primary relative pl-3">
+                        <span
+                          className="absolute w-2 h-2 bg-secondary rounded-full"
+                          style={{
+                            top: "50%",
+                            left: "0",
+                            transform: "translateY(-50%)",
+                          }}
+                        ></span>
+                        {section.characteristic}
+                      </h2>
+
+                      {/* Content */}
+                      <p className="text-foreground text-base leading-relaxed font-serif">
+                        {section.content}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Page indicator for mobile */}
+              <div className="flex justify-center space-x-2 mt-6">
+                {aboutSections.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      aboutSectionRefs.current[index]?.scrollIntoView({
+                        behavior: "smooth",
+                        inline: "center",
+                        block: "nearest",
+                      });
+                    }}
+                    className={`w-3 h-3 rounded-full transition-all duration-100 ${
+                      activeAboutSection === index
+                        ? "bg-primary w-4 h-4"
+                        : "bg-secondary/40 hover:bg-secondary/70"
+                    }`}
+                    aria-label={`Go to about section ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
 
             {/* About navigation dots */}
             <div className="fixed right-8 top-1/2 transform -translate-y-1/2 flex flex-col space-y-4 z-40">
@@ -426,7 +554,7 @@ export default function Home() {
                 >
                   <div className="max-w-7xl w-full">
                     <div
-                      className={`flex flex-col md:flex-row ${
+                      className={`hidden md:flex md:flex-row ${
                         index === 0 ? "h-[70vh]" : "gap-8"
                       } rounded-lg overflow-hidden`}
                     >
@@ -454,10 +582,10 @@ export default function Home() {
                         <div
                           className={`transition-all duration-100 ease-in-out space-y-12
                             ${
-                            activeProject === index && !isAnimating
-                              ? "opacity-100 transform-none"
-                              : "opacity-0"
-                          }`}
+                              activeProject === index && !isAnimating
+                                ? "opacity-100 transform-none"
+                                : "opacity-0"
+                            }`}
                         >
                           <h3 className="text-3xl font-serif font-bold text-primary mb-4">
                             {project.title}
@@ -496,7 +624,68 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                </div>
+                    {/* Mobile Layout - Image as background with text overlay */}
+                    <div
+                      className={`md:hidden relative rounded-lg overflow-hidden h-[85vh] ${
+                        activeProject === index && !isAnimating
+                          ? "opacity-100 transform-none"
+                          : "opacity-0"
+                      }`}
+                    >
+                      {/* Background Image with Overlay */}
+                      <div className="absolute inset-0">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+                        {/* Dark Overlay for Better Text Readability */}
+                        <div className="absolute inset-0 bg-black/60"></div>
+                      </div>
+                      {/* Content Container */}
+                      <div className="relative z-10 h-full flex flex-col justify-between p-6 text-white">
+                        <div className="space-y-4 pt-4">
+                          <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                            {project.title}
+                          </h3>
+                          <p className="text-white/90 text-base font-serif">
+                            {project.description}
+                          </p>
+                        </div>
+
+                        <div className="space-y-6 pb-8">
+                          <div className="flex flex-wrap gap-2">
+                            {project.tags.map((tag, tagIndex) => (
+                              <span
+                                key={tagIndex}
+                                className="px-3 py-1 bg-white/20 text-white text-sm rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <div>
+                            {project.status === "completed" ? (
+                              <button
+                                className="px-6 py-2 bg-primary text-white rounded-full w-full"
+                                onClick={() => window.open(project.link)}
+                              >
+                                View Project
+                              </button>
+                            ) : (
+                              <button
+                                className="px-6 py-2 bg-secondary text-white rounded-full w-full"
+                                disabled
+                              >
+                                In Progress
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               ))}
             </div>
           </div>
