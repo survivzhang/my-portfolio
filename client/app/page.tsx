@@ -431,9 +431,7 @@ const mobileAboutObserver = new IntersectionObserver(
                             index === 0 ? "h-auto" : "h-[500px]"
                           } overflow-hidden`}
                         >
-                          <div
-                            className= "absolute inset-0 transition-all duration-100 ease-in-out"
-                          >
+                          <div className="absolute inset-0 transition-all duration-100 ease-in-out">
                             <Image
                               src={project.image}
                               alt={project.title}
@@ -443,13 +441,7 @@ const mobileAboutObserver = new IntersectionObserver(
                           </div>
                         </div>
                         <div className="w-1/2 p-8 flex flex-col">
-                          <div
-                            className={`transition-all duration-100 ease-in-out space-y-12 ${
-                              activeProject === index && !isAnimating
-                                ? "ring-2 ring-primary" // 使用边框高亮当前活动项目
-                                : ""
-                            }`}
-                          >
+                          <div className="transition-all duration-100 ease-in-out space-y-12">
                             <h3 className="text-3xl font-serif font-bold text-primary mb-4">
                               {project.title}
                             </h3>
@@ -689,9 +681,7 @@ const mobileAboutObserver = new IntersectionObserver(
                   className="min-h-screen flex items-center justify-center"
                 >
                   {/* Mobile Layout - Image as background with text overlay */}
-                  <div
-                    className="relative rounded-lg overflow-hidden h-[85vh] w-full"
-                  >
+                  <div className="relative rounded-lg overflow-hidden h-[85vh] w-full">
                     {/* Background Image with Overlay */}
                     <div className="absolute inset-0">
                       <Image
