@@ -505,7 +505,7 @@ export default function Home() {
         <footer className="bg-secondary text-white p-4">
           <div className="max-w-7xl mx-auto text-center">
             <p className="font-serif">
-              © 2024 Zichen Zhang. All rights reserved.
+              © 2025 Zichen Zhang. All rights reserved.
             </p>
           </div>
         </footer>
