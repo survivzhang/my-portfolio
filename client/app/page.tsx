@@ -358,7 +358,7 @@ const mobileAboutObserver = new IntersectionObserver(
 
               <div className="flex flex-row max-w-7xl mx-auto px-6">
                 {/* Left side - About sections */}
-                <div className="w-1/2 flex flex-col space-y-[60vh] pr-20">
+                <div className="w-1/2 flex flex-col space-y-[30vh] pr-20">
                   {aboutSections.map((section, index) => (
                     <div
                       key={section.id}
@@ -367,7 +367,7 @@ const mobileAboutObserver = new IntersectionObserver(
                       }}
                       className="min-h-screen flex items-center"
                     >
-                      <div className="w-full flex flex-col h-[100vh]">
+                      <div className="w-full flex flex-col h-[80vh]">
                         <p className="text-lg text-secondary pt-16 mb-auto">
                           {section.title}
                         </p>
