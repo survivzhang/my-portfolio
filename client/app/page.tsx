@@ -351,7 +351,7 @@ const mobileAboutObserver = new IntersectionObserver(
 
           {/* About Section - Desktop */}
           <section ref={aboutRef} className="min-h-screen pt-10">
-            <div >
+            <div>
               <h2 className="text-4xl font-serif font-bold text-primary mb-12 text-center">
                 About Me
               </h2>
@@ -495,7 +495,6 @@ const mobileAboutObserver = new IntersectionObserver(
         </div>
 
         {/* Right side - Collapsible Sidebar (Desktop only) */}
-        <CollapsibleSidebar />
       </div>
 
       {/* 移动端布局 - 只在中等屏幕以下显示 */}
@@ -507,7 +506,7 @@ const mobileAboutObserver = new IntersectionObserver(
         >
           <div className="flex-grow flex flex-col items-center px-6 py-8 relative h-full">
             {/* Background graphic element */}
-            <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 z-0">
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden opacity-10 z-0">
               <Image
                 src="/profilo.svg"
                 alt="Background profile"
@@ -518,18 +517,6 @@ const mobileAboutObserver = new IntersectionObserver(
 
             {/* Content with gradient background */}
             <div className="w-full flex flex-col items-center text-center z-10 mt-12">
-              <div className="mb-6 relative">
-                <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-secondary mx-auto">
-                  <Image
-                    src="/myPhoto.png"
-                    alt="Zichen"
-                    width={144}
-                    height={144}
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-
               <p className="text-lg text-secondary mb-3 font-serif">
                 Hey there! My name is
               </p>
@@ -765,6 +752,7 @@ const mobileAboutObserver = new IntersectionObserver(
           />
         ))}
       </div>
+      <CollapsibleSidebar />
     </div>
   );
 }
