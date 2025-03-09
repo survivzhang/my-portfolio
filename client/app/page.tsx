@@ -161,13 +161,19 @@ export default function Home() {
               (ref) => ref === entry.target
             );
             if (index !== -1) {
-              setActiveAboutSection(index);
+                      if (
+                        entry.isIntersecting &&
+                        (index !== activeAboutSection ||
+                          entry.intersectionRatio > 0.8)
+                      ) {
+                        setActiveAboutSection(index);
+                      }
             }
           }
         });
       },
       {
-        threshold: 0.6,
+        threshold: [0.5, 0.8],
         rootMargin: "-10px 0px",
       }
     );
@@ -389,11 +395,7 @@ export default function Home() {
                     ref={(el) => {
                       aboutSectionRefs.current[index] = el;
                     }}
-                    className={`min-h-screen flex items-center transition-all duration-100 ${
-                      activeAboutSection === index
-                        ? "opacity-100 scale-100"
-                        : "opacity-50 scale-95"
-                    }`}
+                    className="min-h-screen flex items-center"
                   >
                     <div className="w-full flex flex-col h-[70vh]">
                       {" "}
@@ -624,68 +626,68 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                    {/* Mobile Layout - Image as background with text overlay */}
-                    <div
-                      className={`md:hidden relative rounded-lg overflow-hidden h-[85vh] ${
-                        activeProject === index && !isAnimating
-                          ? "opacity-100 transform-none"
-                          : "opacity-0"
-                      }`}
-                    >
-                      {/* Background Image with Overlay */}
-                      <div className="absolute inset-0">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                        />
-                        {/* Dark Overlay for Better Text Readability */}
-                        <div className="absolute inset-0 bg-black/60"></div>
+                  {/* Mobile Layout - Image as background with text overlay */}
+                  <div
+                    className={`md:hidden relative rounded-lg overflow-hidden h-[85vh] ${
+                      activeProject === index && !isAnimating
+                        ? "opacity-100 transform-none"
+                        : "opacity-0"
+                    }`}
+                  >
+                    {/* Background Image with Overlay */}
+                    <div className="absolute inset-0">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                      />
+                      {/* Dark Overlay for Better Text Readability */}
+                      <div className="absolute inset-0 bg-black/60"></div>
+                    </div>
+                    {/* Content Container */}
+                    <div className="relative z-10 h-full flex flex-col justify-between p-6 text-white">
+                      <div className="space-y-4 pt-4">
+                        <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                          {project.title}
+                        </h3>
+                        <p className="text-white/90 text-base font-serif">
+                          {project.description}
+                        </p>
                       </div>
-                      {/* Content Container */}
-                      <div className="relative z-10 h-full flex flex-col justify-between p-6 text-white">
-                        <div className="space-y-4 pt-4">
-                          <h3 className="text-2xl font-serif font-bold text-white mb-2">
-                            {project.title}
-                          </h3>
-                          <p className="text-white/90 text-base font-serif">
-                            {project.description}
-                          </p>
-                        </div>
 
-                        <div className="space-y-6 pb-8">
-                          <div className="flex flex-wrap gap-2">
-                            {project.tags.map((tag, tagIndex) => (
-                              <span
-                                key={tagIndex}
-                                className="px-3 py-1 bg-white/20 text-white text-sm rounded-full"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <div>
-                            {project.status === "completed" ? (
-                              <button
-                                className="px-6 py-2 bg-primary text-white rounded-full w-full"
-                                onClick={() => window.open(project.link)}
-                              >
-                                View Project
-                              </button>
-                            ) : (
-                              <button
-                                className="px-6 py-2 bg-secondary text-white rounded-full w-full"
-                                disabled
-                              >
-                                In Progress
-                              </button>
-                            )}
-                          </div>
+                      <div className="space-y-6 pb-8">
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag, tagIndex) => (
+                            <span
+                              key={tagIndex}
+                              className="px-3 py-1 bg-white/20 text-white text-sm rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <div>
+                          {project.status === "completed" ? (
+                            <button
+                              className="px-6 py-2 bg-primary text-white rounded-full w-full"
+                              onClick={() => window.open(project.link)}
+                            >
+                              View Project
+                            </button>
+                          ) : (
+                            <button
+                              className="px-6 py-2 bg-secondary text-white rounded-full w-full"
+                              disabled
+                            >
+                              In Progress
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
               ))}
             </div>
           </div>
