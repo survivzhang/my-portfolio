@@ -10,18 +10,39 @@ const projects = [
   {
     id: 1,
     title: "Blue Crew",
-    description: "A website made for a environmental protection organization",
+    description:
+      "A website for an environmental protection organization. As the frontend developer, I created the interactive modal system, designed the enrollment page, and built the Blingo functionality that connects users with environmental activities. Implemented with Vue.js and integrated with Django backend.",
     image: "/blue-crew.png",
-    tags: ["Vue", "Django", "Tailwind CSS"],
+    tags: [
+      "Vue",
+      "Django",
+      "Tailwind CSS",
+      "Docker",
+      "Git",
+      "Figma",
+      "CSS",
+      "HTML",
+    ],
     link: "https://blingo.com.au/",
     status: "completed",
   },
   {
     id: 2,
     title: "Zichen's Portfolio",
-    description: "My personal portfolio website",
+    description:
+      "A responsive, modern portfolio website built to showcase my web development projects and skills. Designed with a clean aesthetic using Next.js and Tailwind CSS, featuring smooth scrolling animations, interactive project cards, and dynamic content sections.",
     image: "/zichen.jpg",
-    tags: ["Next.js", "Tailwind CSS"],
+    tags: [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "Git",
+      "Figma",
+      "CSS",
+      "HTML",
+      "Vercel",
+      "Javascript",
+    ],
     link: "https://coldalex1998.vercel.app/",
     status: "completed",
   },
@@ -29,9 +50,18 @@ const projects = [
     id: 3,
     title: "Road to a professional programmer",
     description:
-      "A website for the beginners who want to become a professional programmer, to choose which side they want to go",
+      "An interactive guidance platform for aspiring programmers. As the frontend developer, I designed and implemented the career path visualization system, interactive learning roadmaps, job search tools, and programmer journey tracker. Built with React and connected to a Flask backend, featuring personalized learning recommendations and developer resources",
     image: "/frontend.png",
-    tags: ["React", "Flask", "Tailwind CSS", "AWS"],
+    tags: [
+      "React",
+      "Flask",
+      "Tailwind CSS",
+      "AWS",
+      "Git",
+      "Figma",
+      "CSS",
+      "HTML",
+    ],
     link: "https://road-to-professional-programmer.vercel.app/",
     status: "still in progress",
   },
@@ -378,7 +408,6 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        {/* Projects Section */}
         <section ref={projectsRef} className="min-h-screen pt-16">
           <div className="py-16">
             <h2 className="text-4xl font-serif font-bold text-primary mb-12 text-center">
@@ -407,7 +436,7 @@ export default function Home() {
                         } overflow-hidden`}
                       >
                         <div
-                          className={`absolute inset-0 transition-all duration-100 ease-in-out ${
+                          className={`absolute inset-0 transition-all duration-100 ease-in-out  ${
                             activeProject === index && !isAnimating
                               ? "opacity-100 transform-none"
                               : "opacity-0"
@@ -423,7 +452,8 @@ export default function Home() {
                       </div>
                       <div className="md:w-1/2 p-8 flex flex-col">
                         <div
-                          className={`transition-all duration-100 ease-in-out ${
+                          className={`transition-all duration-100 ease-in-out space-y-12
+                            ${
                             activeProject === index && !isAnimating
                               ? "opacity-100 transform-none"
                               : "opacity-0"
