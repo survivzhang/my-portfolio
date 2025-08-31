@@ -18,7 +18,6 @@
 **Description:** Following the lab's reference prompts, I clicked on the AWS console's URL https://489389878001.signin.aws.amazon.com/console and entered my user ID, username, and password.
 
 **Result:** Successfully logged into AWS console as IAM user with username 24064091@student.uwa.edu.au
-[Refer to the marking rubrics for sufficient step-by-step description.]
 
 ### [2] Search and open Identity Access Management
 
