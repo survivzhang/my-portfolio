@@ -291,18 +291,18 @@ to query and get the public IP address '3.96.201.222' of the specified EC2 insta
 
 ```python
 def create_security_group(group_name, description, vpc_id):
-    # 创建 EC2 客户端
+    # Create EC2 client
     ec2 = boto3.client('ec2')
     
     try:
-        # 创建安全组
+        # Create security group
         response = ec2.create_security_group(
             GroupName=group_name,
             Description=description,
             VpcId=vpc_id
         )
         
-        # 提取安全组 ID
+        # Extract security group ID
         group_id = response['GroupId']
         print(f"Security Group Created: {group_id}")
         
@@ -311,9 +311,9 @@ def create_security_group(group_name, description, vpc_id):
         print(f"Error creating security group: {e}")
 
 if __name__ == "__main__":
-    group_name = "24064091-sg"  # 替换为你的学生编号
+    group_name = "24064091-sg"  # Replace with your student number
     description = "security group for development environment"
-    vpc_id = "vpc-0005adec206d1e86a"  # 替换为你的 VPC ID
+    vpc_id = "vpc-0005adec206d1e86a"  # Replace with your VPC ID
     create_security_group(group_name, description, vpc_id)
 ```
 
@@ -359,13 +359,13 @@ def create_key_pair(key_name, file_path):
     ec2 = boto3.client('ec2')
     
     try:
-        # 创建密钥对
+        # Create key pair
         response = ec2.create_key_pair(KeyName=key_name)
         
-        # 提取密钥材料
+        # Extract key material
         key_material = response['KeyMaterial']
         
-        # 将密钥材料保存到 PEM 文件中
+        # Save key material to PEM file
         with open(file_path, 'w') as file:
             file.write(key_material)
         
@@ -374,8 +374,8 @@ def create_key_pair(key_name, file_path):
         print(f"Error creating key pair: {e}")
 
 if __name__ == "__main__":
-    key_name = "24064091-key"  # 替换为学生编号
-    file_path = f"24064091-key.pem"  # 替换为希望保存密钥的文件名
+    key_name = "24064091-key"  # Replace with student number
+    file_path = f"24064091-key.pem"  # Replace with desired file name
     create_key_pair(key_name, file_path)
 ```
 
@@ -389,7 +389,7 @@ if __name__ == "__main__":
 def run_instance(image_id, security_group_id, key_name):
     ec2 = boto3.client('ec2')
     try:
-        # 启动实例
+        # Launch instance
         response = ec2.run_instances(
             ImageId=image_id,
             SecurityGroupIds=[security_group_id],
@@ -399,7 +399,7 @@ def run_instance(image_id, security_group_id, key_name):
             MaxCount=1
         )
         
-        # 提取实例 ID
+        # Extract instance ID
         instance_id = response['Instances'][0]['InstanceId']
         print(f"Instance launched with ID: {instance_id}")
         return instance_id
@@ -407,9 +407,9 @@ def run_instance(image_id, security_group_id, key_name):
         print(f"Error launching instance: {e}")
 
 if __name__ == "__main__":
-    image_id = "ami-048ddca51ab3229ab"  # 替换 AMI ID
-    security_group_id = "24064091-sg"  # 替换安全组 ID
-    key_name = "24064091-key"  # 替换密钥对名称
+    image_id = "ami-048ddca51ab3229ab"  # Replace AMI ID
+    security_group_id = "24064091-sg"  # Replace security group ID
+    key_name = "24064091-key"  # Replace key pair name
     run_instance(image_id, security_group_id, key_name)
 ```
 
@@ -423,7 +423,7 @@ if __name__ == "__main__":
 def create_tags(instance_id, key, value):
     ec2 = boto3.client('ec2')
     try:
-        # 创建标签
+        # Create tags
         response = ec2.create_tags(
             Resources=[instance_id],
             Tags=[
@@ -438,13 +438,13 @@ def create_tags(instance_id, key, value):
         print(f"Error creating tags: {e}")
 
 if __name__ == "__main__":
-    instance_id = "i-031769c98ffd19f82"  # 替换实例 ID
+    instance_id = "i-031769c98ffd19f82"  # Replace instance ID
     key = "Name"
-    value = "24064091-vm"  # 替换学生编号-vm
+    value = "24064091-vm"  # Replace student number-vm
     create_tags(instance_id, key, value)
 ```
 
-**Explanation:** Then I created the function create_tags(instance_id, key, value) to create tags. Continue calling the client method to create the client followed by the create_tags method to create the tags with the key and value. If any error occurs during the process of starting the instance, the program catches the exception and prints the error message to help debugging and problem-solving. As shown above, the tags are successfully created.
+**Explanation:** Then I created the function create_tags(instance_id, key, value) to create tags. Continue calling the client method to create the client followed by the create_tags method to create the tags with the key and value. If any error occurs during the process of starting the instance, the program catches the exception and prints an error message to help debugging and problem-solving. As shown above, the tags are successfully created.
 
 #### [2.2.6] Get the public IP address
 
@@ -454,12 +454,12 @@ if __name__ == "__main__":
 def get_instance_public_ip(instance_id):
     ec2 = boto3.client('ec2')
     try:
-        # 获取实例信息
+        # Get instance info
         response = ec2.describe_instances(
             InstanceIds=[instance_id]
         )
         
-        # 提取公共 IP 地址
+        # Extract public IP address
         public_ip = response['Reservations'][0]['Instances'][0].get('PublicIpAddress', 'No public IP')
         print(f"Instance {instance_id} Public IP Address: {public_ip}")
         return public_ip
@@ -467,11 +467,11 @@ def get_instance_public_ip(instance_id):
         print(f"Error retrieving public IP address: {e}")
 
 if __name__ == "__main__":
-    instance_id = "i-031769c98ffd19f82"  # 替换实例 ID
+    instance_id = "i-031769c98ffd19f82"  # Replace instance ID
     get_instance_public_ip(instance_id)
 ```
 
-**Explanation:** Then I created the function get_instance_public_ip(instance_id) to get the public address of the instance. Continuing to call the client method to create the client, followed by a call to describe_instances to get the instance ID, followed by response"['Reservations']""[0]""['Instances']"[0].get('PublicIpAddress', 'No public IP') Get the public IP, response"['Reservations']""[0]""['Instances']"[0] is a list containing all instances under this reservation. The [0] means take out the details of the first instance. .get() is a method of the Python dictionary that gets the value of the specified key.
+**Explanation:** Then I created the function get_instance_public_ip(instance_id) to get the public address of the instance. Continuing to call the client method to create the client, followed by a call to describe_instances to get the instance ID, followed by response"['Reservations']""[0]""['Instances']"[0].get('PublicIpAddress', 'No Public IP') Get the public IP, response"['Reservations']""[0]""['Instances']"[0] is a list containing all instances under this reservation. The [0] means take out the details of the first instance. .get() is a method of the Python dictionary that gets the value of the specified key.
 
 PublicIpAddress is the public IP address field for the instance. If the instance has a public IP address assigned, it returns the corresponding IP. If no public IP address is assigned, it returns the default value 'No public IP'. If any error occurs during the process of obtaining the public network address, the program catches the exception and prints an error message to help debugging and problem-solving. As shown in the above figure, the public IP was successfully obtained: 3.98.95.40.
 
@@ -622,7 +622,7 @@ print("done")
 import boto3
 import os
 
-# AWS S3 配置
+# AWS S3 config
 BUCKET_NAME = '24064091-cloudstorage'
 LOCAL_DIR = 'restored_from_S3'
 
@@ -635,10 +635,10 @@ def download_from_s3(bucket_name, local_dir):
                 key = obj.get('Key')
                 local_file_path = os.path.join(local_dir, key)
                 
-                # 确保本地目录存在
+                # Ensure local directory exists
                 os.makedirs(os.path.dirname(local_file_path), exist_ok=True)
                 
-                # 下载文件
+                # Download file
                 s3.download_file(bucket_name, key, local_file_path)
                 print(f'Downloaded {key} to {local_file_path}')
 
@@ -712,27 +712,27 @@ dynamodb = boto3.resource('dynamodb')
 
 def create_table():
     try:
-        # 创建表
+        # Create table
         table = dynamodb.create_table(
             TableName='CloudFiles',
             KeySchema=[
                 {
                     'AttributeName': 'userId',
-                    'KeyType': 'HASH'  # 分区键
+                    'KeyType': 'HASH'  # Partition key
                 },
                 {
                     'AttributeName': 'fileName',
-                    'KeyType': 'RANGE'  # 排序键
+                    'KeyType': 'RANGE'  # Sort key
                 },
             ],
             AttributeDefinitions=[
                 {
                     'AttributeName': 'userId',
-                    'AttributeType': 'S'  # 字符串类型
+                    'AttributeType': 'S'  # String type
                 },
                 {
                     'AttributeName': 'fileName',
-                    'AttributeType': 'S'  # 字符串类型
+                    'AttributeType': 'S'  # String type
                 },
             ],
             ProvisionedThroughput={
@@ -740,10 +740,10 @@ def create_table():
                 'WriteCapacityUnits': 5
             }
         )
-        table.wait_until_exists()  # 等待表创建完成
-        print(f"成功创建表: {table.table_name}!")
+        table.wait_until_exists()  # Wait until table is created
+        print(f"Successfully created table: {table.table_name}!")
     except Exception as e:
-        print(f"创建表时发生错误: {e}")
+        print(f"Error creating table: {e}")
 
 if __name__ == "__main__":
     create_table()
@@ -760,7 +760,7 @@ import boto3
 import os
 from datetime import import datetime
 
-# S3 配置
+# AWS S3 config
 BUCKET_NAME = '24064091-cloudstorage'
 
 TABLE_NAME = 'CloudFiles'
@@ -854,14 +854,14 @@ to delete the created DynamoDB table.
 import boto3
 import json
 
-# 创建一个S3客户端
+# Create an S3 client
 s3 = boto3.client('s3')
 
-# 定义S3储存桶名称和用户名
+# Define S3 bucket name and username
 bucket_name = "24064091-cloudstorage"
 username = "24064091@student.uwa.edu.au"
 
-# 创建策略文档
+# Create policy document
 bucket_policy = {
     "Version": "2012-10-17",
     "Statement": [
@@ -917,23 +917,23 @@ to display the policy. And logging into the console also shows the policy.
 ```python
 import boto3
 
-# 创建一个KMS客户端
+# Create a KMS client
 kms_client = boto3.client('kms')
 
-# 学生编号
+# Student number
 student_id = '24064091'
 
-# 创建KMS密钥
+# Create KMS key
 response = kms_client.create_key(
     Description='KMS key created for student',
     KeyUsage='ENCRYPT_DECRYPT',
     Origin='AWS_KMS'
 )
 
-# 获取密钥的KeyId
+# Get KeyId of the key
 key_id = response['KeyMetadata']['KeyId']
 
-# 创建别名
+# Create alias
 alias_name = f'alias/{student_id}'
 
 kms_client.create_alias(
@@ -952,13 +952,13 @@ kms_client.create_alias(
 import boto3
 import json
 
-# 创建KMS客户端
+# Create KMS client
 kms_client = boto3.client('kms')
 
-# 定义你的密钥ID
+# Define your key ID
 key_id = '6753d8a9-f9de-4515-bf7b-e34a7ad96d01'
 
-# 定义要附加的策略
+# Define the policy to attach
 policy = {
     "Version": "2012-10-17",
     "Id": "key-consolepolicy-3",
@@ -1032,7 +1032,7 @@ policy = {
     ]
 }
 
-# 将策略转换为JSON格式并附加到KMS密钥
+# Convert policy to JSON and attach to KMS key
 policy_json = json.dumps(policy)
 kms_client.put_key_policy(
     KeyId=key_id,
@@ -1063,16 +1063,16 @@ import base64
 import os
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 
-# AWS S3和KMS客户端
+# AWS S3 and KMS clients
 s3_client = boto3.client('s3')
 kms_client = boto3.client('kms')
 
-# 定义储存桶名称和KMS密钥ID
+# Define bucket name and KMS key ID
 bucket_name = "24064091-cloudstorage"
 kms_key_id = "6753d8a9-f9de-4515-bf7b-e34a7ad96d01"
 
 def encrypt_file(file_content):
-    """使用KMS加密文件内容"""
+    """Encrypt file content using KMS"""
     response = kms_client.encrypt(
         KeyId=kms_key_id,
         Plaintext=file_content
@@ -1080,7 +1080,7 @@ def encrypt_file(file_content):
     return response['CiphertextBlob']
 
 def decrypt_file(ciphertext_blob):
-    """使用KMS解密文件内容"""
+    """Decrypt file content using KMS"""
     response = kms_client.decrypt(
         CiphertextBlob=ciphertext_blob
     )
@@ -1095,28 +1095,28 @@ def decrypt_file(ciphertext_blob):
 
 ```python
 def process_files():
-    """遍历S3储存桶中的文件，进行加密和解密操作"""
+    """Traverse files in S3 bucket, perform encryption and decryption operations"""
     try:
-        # 列出储存桶中的所有对象
+        # List all objects in the bucket
         response = s3_client.list_objects_v2(Bucket=bucket_name)
         if 'Contents' in response:
             for obj in response['Contents']:
                 file_key = obj['Key']
                 print(f"Processing file: {file_key}")
                 
-                # 下载文件内容
+                # Download file content
                 file_obj = s3_client.get_object(Bucket=bucket_name, Key=file_key)
                 file_content = file_obj['Body'].read()
                 
-                # 加密文件内容
+                # Encrypt file content
                 encrypted_content = encrypt_file(file_content)
                 s3_client.put_object(Bucket=bucket_name, Key=f"{file_key}.encrypted", Body=encrypted_content)
                 print(f"Encrypted file saved as: {encrypted_key}")
                 
-                # 解密文件内容
+                # Decrypt file content
                 decrypted_content = decrypt_file(encrypted_content)
                 s3_client.put_object(Bucket=bucket_name, Key=f"{file_key}.decrypted", Body=decrypted_content)
-                print(f"Decrypted file saved as: {decrypted_key}")
+                print(f"Decrypted file saved as: {dec_file_path}")
     
     except (NoCredentialsError, PartialCredentialsError):
         print("Error: AWS credentials are not configured correctly.")
@@ -1124,8 +1124,7 @@ def process_files():
         print(f"An error occurred: {e}")
 ```
 
-**Description:** Next, I defined the function process_files() to traverse the files in the S3 storage bucket using a try statement and a for loop, call the get_object method to download the files, and call the encrypt_file function and the decrypt_file function to perform encryption and decryption operations. The encrypted and decrypted files are named {file_key}.encrypted and {file_key}.decrypted respectively. If an exception occurs, an exception is thrown.
-
+**Description:** In the last step, I define a function process_files() to traverse the files in the S3 storage bucket using a try statement and a for loop, call the get_object method to download the files, and call the encrypt_file function and the decrypt_file function to perform encryption and decryption operations. The encrypted and decrypted files are named {file_key}.encrypted and {file_key}.decrypted respectively. If an exception occurs, an exception is thrown.
 
 ### [5] Apply `pycryptodome` for encryption/decryption
 
@@ -1145,7 +1144,7 @@ bucket_name = "24064091-cloudstorage"
 
 BLOCK_SIZE = 16
 CHUNK_SIZE = 64 * 1024
-KEY = b'your32-byte-fixed-length-key-here'  # 32 字节的固定密钥，用于 AES 256 位加密
+KEY = b'your32-byte-fixed-length-key-here'  # 32 bytes fixed key for AES 256-bit encryption
 ```
 
 **Description:** Following the prompts, I first created the S3 client and defined the bucket name 24064091-cloudstorage, then defined the key 'your32-byte-fixed-length-key-here', which is a 32-byte fixed key for AES 256-bit encryption and decryption. BLOCK_SIZE = 16: AES encryption uses a fixed block size, AES block size is always 16 bytes (128 bits). Even if a 256-bit key is used for encryption, the processed data is still encrypted in 16-byte blocks. CHUNK_SIZE = 64 * 1024: This is the chunk size of the data, usually used for processing large files. Data is divided into 64 KB (64 * 1024 bytes) chunks to be encrypted or decrypted in batches, which can reduce memory usage.
@@ -1162,7 +1161,7 @@ def encrypt_file(in_filename, out_filename):
     
     with open(in_filename, 'rb') as infile:
         with open(out_filename, 'wb') as outfile:
-            # 写入文件大小和 IV
+            # Write file size and IV
             outfile.write(struct.pack('<Q', filesize))
             outfile.write(iv)
             while True:
@@ -1199,7 +1198,7 @@ def decrypt_file(in_filename, out_filename):
             outfile.truncate(origsize)
 ```
 
-**Description:** Next, I defined the function decrypt_file(in_filename, out_filename) to decrypt the file. Where in_filename represents the encrypted input file and out_filename represents the decrypted output file. Use with open method to open the encrypted input file in binary mode ('rb') in order to read the encrypted data in it. struct.unpack('<Q', infile.read(struct.calcsize('Q'))) means to read the size of the original file during encryption. struct.calcsize('Q')) means to read the size of the original file during encryption. construct.calcsize('Q') calculates the size of 8 bytes (<Q means 64-bit unsigned integer with small end-order). infile.read(struct.calcsize('Q')) reads the first 8 bytes of the file, which represents the size of the original file. struct.unpack('<Q', ...) Unpack the read binary data into integer form. origsize: this is the size of the original file, after decryption, we will intercept the file based on this size to remove the padding.
+**Description:** Next, I defined the function decrypt_file(in_filename, out_filename) to decrypt the file. Where in_filename represents the encrypted input file and out_filename represents the decrypted output file. Use with open method to open the encrypted input file in binary mode ('rb') in order to read the encrypted data in it. struct.unpack('<Q', infile.read(struct.calcsize('Q'))) means to read the size of the original file during encryption. struct.calcsize('Q') means to read the size of the original file during encryption. construct.calcsize('Q') calculates the size of 8 bytes (<Q means 64-bit unsigned integer with small end-order). infile.read(struct.calcsize('Q')) reads the first 8 bytes of the file, which represents the size of the original file. struct.unpack('<Q', ...) Unpack the read binary data into integer form. origsize: this is the size of the original file, after decryption, we will intercept the file based on this size to remove the padding.
 
 After that the initial vector Iv is read and the decryptor is created respectively (a decryptor in AES CBC mode is created using the same key (KEY) and initial vector (iv) as used for encryption). The output file is then opened in binary mode using the with open() method: the decrypted data is ready to be written. The encrypted chunks are read one at a time in CHUNK_SIZE size. CHUNK_SIZE is usually 64 KB, so the data is processed in chunks. If the length of the block read is 0, the file has been read, and exit the loop. Decrypt each block and write the decrypted data to the output file.
 
@@ -1219,51 +1218,51 @@ def process_s3_bucket(bucket_name):
                 local_file_path = os.path.join('.', file_name)
                 
                 try:
-                    # 确保目录存在
+                    # Ensure directory exists
                     os.makedirs(os.path.dirname(local_file_path), exist_ok=True)
                     
-                    # 下载文件
+                    # Download file
                     s3_client.download_file(bucket_name, file_name, local_file_path)
                     
-                    # 加密文件
+                    # Encrypt file
                     enc_file_path = f"{local_file_path}.second_encrypted"
                     encrypt_file(local_file_path, enc_file_path)
-                    print(f"文件加密完成：{enc_file_path}")
+                    print(f"File encrypted: {enc_file_path}")
                     
-                    # 解密文件
+                    # Decrypt file
                     dec_file_path = f"{local_file_path}.decrypted"
                     decrypt_file(enc_file_path, dec_file_path)
-                    print(f"文件解密完成：{dec_file_path}")
+                    print(f"File decrypted: {dec_file_path}")
                     
-                    # 上传加密和解密文件到 S3，保持原始文件的目录结构
+                    # Upload encrypted and decrypted files to S3, keeping original directory structure
                     s3_client.upload_file(enc_file_path, bucket_name, f"{file_name}.second_encrypted")
                     s3_client.upload_file(dec_file_path, bucket_name, f"{file_name}.decrypted")
                     
-                    # 删除本地文件
+                    # Delete local files
                     os.remove(local_file_path)
                     os.remove(enc_file_path)
                     os.remove(dec_file_path)
                 except Exception as e:
-                    print(f"处理文件时出错：{file_name}, 错误：{str(e)}")
+                    print(f"Error processing file: {file_name}, Error: {str(e)}")
     
     except (NoCredentialsError, PartialCredentialsError) as e:
-        print(f"AWS 凭证错误：{str(e)}")
+        print(f"AWS credentials error: {str(e)}")
     except Exception as e:
         print(f"An error occurred: {e}")
 
-# 调用 S3 处理函数
+# Call S3 processing function
 process_s3_bucket(bucket_name)
-# 文件加密完成：./rootfile.txt.second_encrypted
-# 文件解密完成：./rootfile.txt.decrypted
-# 文件加密完成：./subdir/subfile.txt.second_encrypted
-# 文件解密完成：./subdir/subfile.txt.decrypted
+# File encrypted: ./rootfile.txt.second_encrypted
+# File decrypted: ./rootfile.txt.decrypted
+# File encrypted: ./subdir/subfile.txt.second_encrypted
+# File decrypted: ./subdir/subfile.txt.decrypted
 ```
 
 **Description:** In the last step, I define a function process_s3_bucket(bucket_name) to process the files in the specified S3 storage bucket. The specific operations include downloading the files, encrypting them, decrypting them, uploading the encrypted and decrypted files, and finally cleaning up the local files.
 
 In the try statement block, the s3_client.list_objects_v2() method is first used to list the objects in the S3 storage bucket. Next, the response is checked to see if it contains the Contents key, which contains all the file objects in the storage bucket. If it does, it iterates through all the files in the bucket, with an item representing the metadata for each file. Get the filename, which is the object key for the file in the S3 bucket. Use the join method to save the file to a local relative path that is consistent with the S3 directory structure.
 
-In the sub-try statement block, the local directory structure is created using the makedirs() method (if it does not exist). Then use os.path.dirname(local_file_path) to get the directory path of the file. This is followed by a judgment call to skip creation and avoid throwing an exception if the directory already exists. Then the download_file() method downloads the file from S3 to the locally specified path.
+In the sub-try statement block, the local directory structure is created using the makedirs() method (if it does not exist). Then the download_file() method downloads the file from S3 to the locally specified path.
 
 Finally, name the encrypted and decrypted file, call encrypt_file and decrypt_file to encrypt and decrypt the file, and upload the encrypted and decrypted file back to the S3 storage bucket using the upload_file() method to maintain the original directory structure of the file. Finally, the original, encrypted, and decrypted files are deleted locally using the remove() method to save storage space. And throw an exception.
 
@@ -1291,11 +1290,11 @@ student_number = "24064091"
 region_name = "ca-central-1"
 availability_zones = ["ca-central-1a", "ca-central-1b"]
 
-# 创建EC2客户端和ELB v2客户端
+# Create EC2 client and ELB v2 client
 ec2_client = boto3.client('ec2', region_name=region_name)
 elb_client = boto3.client('elbv2', region_name=region_name)
 
-# 创建安全组
+# Create security group
 security_group_name = f"{student_number}-sg"
 description = "Security group for HTTP and SSH access"
 vpc_id = ec2_client.describe_vpcs()['Vpcs'][0]['VpcId']
@@ -1316,7 +1315,7 @@ response = ec2_client.create_security_group(
 ```python
 security_group_id = response['GroupId']
 
-# 添加安全组规则
+# Add security group rules
 ec2_client.authorize_security_group_ingress(
     GroupId=security_group_id,
     IpPermissions=[
@@ -1336,26 +1335,26 @@ ec2_client.authorize_security_group_ingress(
 )
 ```
 
-**Description:** Then, when prompted, I called the authorize_security_group_ingress function to add an inbound rule to the specified security group, defining which traffic can enter the associated EC2 instance. groupId: specifies the ID of the security group to be modified. security_group_id is the security group ID that was returned from the previous security group creation. IpPermissions represents a list containing multiple inbound rules, each specifying the allowed protocols, port ranges, and source IP ranges (CIDR). The first rule indicates that the protocol is TCP, the inbound and outbound ports are 22, and the IP range allows access from any IP address. The second rule indicates that the protocol is TCP, the inbound and outbound ports are 80, and the IP range allows access from any IP address.
+**Description:** Then, following the prompts, I called the authorize_security_group_ingress function to add an inbound rule to the specified security group, defining which traffic can enter the associated EC2 instance. groupId: specifies the ID of the security group to be modified. security_group_id is the security group ID that was returned from the previous security group creation. IpPermissions represents a list containing multiple inbound rules, each specifying the allowed protocols, port ranges, and source IP ranges (CIDR). The first rule indicates that the protocol is TCP, the inbound and outbound ports are 22, and the IP range allows access from any IP address. The second rule indicates that the protocol is TCP, the inbound and outbound ports are 80, and the IP range allows access from any IP address.
 
 ##### [5.1.1.3] Create, Save and Set permission for keypair
 
 **Code:**
 
 ```python
-# 创建密钥对
+# Create key pair
 key_pair_name = f"{student_number}-keypair"
 key_pair = ec2_client.create_key_pair(KeyName=key_pair_name)
 
-# 保存密钥对的.pem文件
+# Save key pair .pem file
 with open(f"{key_pair_name}.pem", "w") as file:
     file.write(key_pair['KeyMaterial'])
 
-# 设置权限为只读
+# Set permission to read-only
 import os
 os.chmod(f"{key_pair_name}.pem", 0o400)
 
-# 获取子网ID
+# Get subnet IDs
 subnets = []
 for az in availability_zones:
     subnet = ec2_client.describe_subnets(
@@ -1371,14 +1370,14 @@ for az in availability_zones:
 **Code:**
 
 ```python
-# 创建两个EC2实例
+# Create two EC2 instances
 instances = []
 instance_ids = []
 for i, az in enumerate(availability_zones):
     instance = ec2_client.run_instances(
         ImageId="ami-048ddca51ab3229ab",
         InstanceType="t2.micro",
-        KeyName=key_pair_name,  # 关联密钥对
+        KeyName=key_pair_name,  # Associate key pair
         MaxCount=1,
         MinCount=1,
         SecurityGroupIds=[security_group_id],
@@ -1407,7 +1406,7 @@ for i, az in enumerate(availability_zones):
 **Code:**
 
 ```python
-# 创建应用负载均衡器
+# Create application load balancer
 load_balancer = elb_client.create_load_balancer(
     Name=f"{student_number}-lb",
     Subnets=subnets,
@@ -1426,7 +1425,7 @@ load_balancer_arn = load_balancer['LoadBalancers'][0]['LoadBalancerArn']
 **Code:**
 
 ```python
-# 创建目标组
+# Create target group
 target_group = elb_client.create_target_group(
     Name=f"{student_number}-tg",
     Protocol='HTTP',
@@ -1436,7 +1435,7 @@ target_group = elb_client.create_target_group(
 )
 target_group_arn = target_group['TargetGroups'][0]['TargetGroupArn']
 
-# 注册目标
+# Register targets
 targets = [{'Id': instance_id} for instance_id in instance_ids]
 elb_client.register_targets(
     TargetGroupArn=target_group_arn,
@@ -1455,7 +1454,7 @@ elb_client.register_targets(
 **Code:**
 
 ```python
-# 创建监听器
+# Create listener
 elb_client.create_listener(
     LoadBalancerArn=load_balancer_arn,
     Protocol='HTTP',
@@ -1512,6 +1511,10 @@ sudo nano /var/www/html/index.html
 to edit the default web page, after entering the modified page, I will change the title to '24064091-vm1', and then save the exit, and enter the instance 24064091-vm1 in the browser. vm1's public address is 3.96.184.71, and found that the page title has been changed as expected.
 
 **Explanation:** **nano:** is an easy-to-use text editor commonly used on Linux and Unix systems. It provides a command-line based user interface and is suitable for editing various types of text files, such as configuration files, code files, and so on.
+
+##### [5.1.3.4] Do same operations in the second instance
+
+**Description:** Finally, as with instance 24064091-vm1, do the same for instance 24064091-vm2, connecting to the instance via SSH, installing apache2, and changing the default web page title in turn, with the final title display changing to '24064091-vm2'. The public IP address for this instance is 3.96.54.155.
 
 ##### [5.1.3.4] Do same operations in the second instance
 
